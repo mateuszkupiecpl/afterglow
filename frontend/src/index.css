@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+  color: #f7f2f5;
+  background: #171116;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
