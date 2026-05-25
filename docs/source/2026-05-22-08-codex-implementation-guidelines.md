@@ -32,7 +32,7 @@ Jeśli dokumenty są sprzeczne:
 
 ## Backend - oczekiwania
 
-- Java 21 + Spring Boot 3.
+- Java 25 LTS + Spring Boot 4.x.
 - REST dla talii i konfiguracji.
 - WebSocket dla rozgrywki multiplayer w późniejszym etapie.
 - Na starcie nie komplikować architektury mikroserwisami, bo świat już wystarczająco cierpi.

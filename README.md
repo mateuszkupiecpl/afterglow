@@ -22,7 +22,7 @@ like a simple random task generator.
 
 - Frontend: React, TypeScript, Vite, PWA.
 - Local storage/cache: IndexedDB/Dexie and Cache API.
-- Backend: Java 21 and Spring Boot 3 in a later stage.
+- Backend: Java 25 LTS and Spring Boot 4.x in a later stage.
 - Multiplayer: server rooms with WebSocket/STOMP, not Bluetooth.
 - Database/cache for later backend stages: PostgreSQL and Redis, both TBD for
   timing and necessity.

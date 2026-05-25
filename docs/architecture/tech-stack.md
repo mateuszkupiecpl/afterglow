@@ -21,8 +21,8 @@
 
 ## Backend
 
-- Java 21.
-- Spring Boot 3.
+- Java 25 LTS.
+- Spring Boot 4.x.
 - REST for decks and configuration.
 - WebSocket or STOMP for later multiplayer.
 - PostgreSQL later: TBD.

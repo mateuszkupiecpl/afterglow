@@ -15,8 +15,8 @@
 
 ### Backend
 
-- Java 21,
-- Spring Boot 3,
+- Java 25 LTS,
+- Spring Boot 4.x,
 - WebSocket albo STOMP,
 - PostgreSQL w późniejszym etapie,
 - Redis w późniejszym etapie, jeśli pokoje gry mają działać na wielu instancjach.

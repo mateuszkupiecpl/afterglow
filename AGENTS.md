@@ -34,5 +34,6 @@ unless the user explicitly asks for it.
 - Players: 2-8.
 - MVP: local one-device gameplay first.
 - Frontend: React, TypeScript, Vite, PWA.
-- Backend: Java 21 and Spring Boot 3 later, mainly for rooms and multiplayer.
+- Backend: Java 25 LTS and Spring Boot 4.x later, mainly for rooms and
+  multiplayer.
 - Public UGC, matchmaking, chat, payments, and native iOS are outside MVP.

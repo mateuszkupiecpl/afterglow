@@ -17,7 +17,7 @@ Build the first version as a web/PWA application rather than a native iOS app.
 
 The proposed frontend platform is React, TypeScript, Vite, and PWA. The MVP
 should start as a local one-device game. Backend and multiplayer can come later
-through Java 21, Spring Boot 3, and WebSocket/STOMP rooms.
+through Java 25 LTS, Spring Boot 4.x, and WebSocket/STOMP rooms.
 
 ## Rationale
 

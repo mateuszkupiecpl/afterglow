@@ -34,8 +34,8 @@ Status: accepted
 
 Backend:
 
-- Java 21,
-- Spring Boot 3,
+- Java 25 LTS,
+- Spring Boot 4.x,
 - WebSocket / STOMP,
 - PostgreSQL później,
 - Redis później.
