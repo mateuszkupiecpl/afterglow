@@ -2,20 +2,59 @@
 
 ## Frontend
 
-TBD
+- React.
+- TypeScript.
+- Vite.
+- PWA.
+- React Router.
+- Mobile-first UI, especially comfortable on iPhone.
+- State management: TBD, candidates include Zustand, Redux Toolkit, TanStack
+  Store, or React Context for an early prototype.
+
+## Local Data and Cache
+
+- IndexedDB, preferably through Dexie, for decks, card text, game state,
+  settings, and private user cards.
+- Cache API for app shell, fonts, images, icons, and other assets.
+- localStorage only for small settings such as theme, last room code, or last
+  selected deck.
 
 ## Backend
 
-TBD
+- Java 21.
+- Spring Boot 3.
+- REST for decks and configuration.
+- WebSocket or STOMP for later multiplayer.
+- PostgreSQL later: TBD.
+- Redis later for multi-instance rooms: TBD.
+- Microservices: out of scope for the early project.
 
-## Data Storage
+## Distribution
 
-TBD
+- Web/PWA through browser.
+- On iPhone, users can add the app to the home screen through Safari.
+- Do not assume App Store distribution for the spicy version.
 
-## Hosting and Deployment
+## Assets
 
-TBD
+- WebP or AVIF for card art and backgrounds.
+- SVG for icons and simple UI elements.
+- PNG only when needed.
+- Lazy-load card images and preload only nearby assets.
 
-## Tooling
+## Backend Endpoints Under Consideration
 
-TBD
+```http
+GET /api/decks
+GET /api/decks/{deckId}
+GET /api/decks/{deckId}/cards
+GET /assets/cards/{cardId}.webp
+WS  /ws/game
+```
+
+## Unknowns
+
+- Hosting provider: TBD.
+- Final state management choice: TBD.
+- Whether MVP has no backend or a mock API: TBD.
+- Exact deck and asset versioning contract: TBD.

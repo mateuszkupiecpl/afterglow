@@ -2,17 +2,38 @@
 
 ## Status
 
-TBD
+Proposed
 
 ## Context
 
-The project needs an initial platform direction before application scaffolding
-begins.
+Afterglow is planned as an 18+ social card game for 2-8 adults. It should work
+primarily on phones, especially iPhone, while also supporting Android and
+desktop. The product needs frequent content updates and should avoid App Store
+review constraints for the spicy version.
 
 ## Decision
 
-TBD
+Build the first version as a web/PWA application rather than a native iOS app.
+
+The proposed frontend platform is React, TypeScript, Vite, and PWA. The MVP
+should start as a local one-device game. Backend and multiplayer can come later
+through Java 21, Spring Boot 3, and WebSocket/STOMP rooms.
+
+## Rationale
+
+- PWA can run on iPhone, Android, desktop, and tablet from one frontend.
+- Players can open it in Safari and add it to the iPhone home screen.
+- The spicy version does not need App Store distribution.
+- Card decks and content can be updated more easily than in a native app.
+- The stack matches the planned React, TypeScript, and Java direction.
+- Bluetooth is not the preferred multiplayer path for iOS/PWA.
 
 ## Consequences
 
-TBD
+- The first version should prioritize browser and mobile PWA constraints.
+- Native iOS features are not assumed.
+- Storage/cache cannot be treated as permanent; the app must tolerate refreshes
+  or re-downloads.
+- Multiplayer should be designed around server rooms and WebSocket when it is
+  added.
+- A lighter App Store version remains TBD.
