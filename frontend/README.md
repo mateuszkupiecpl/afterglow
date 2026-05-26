@@ -1,6 +1,15 @@
 # Afterglow Frontend
 
-Minimal React, TypeScript, and Vite application.
+React, TypeScript, and Vite frontend scaffold for the local one-device MVP.
+
+Expected frontend direction:
+
+- PWA.
+- Axios for API calls once API-backed flows exist.
+- Storybook for isolated UI development.
+- MSW for mocked API flows and gameplay scenarios.
+- Gameplay/domain logic should remain testable outside React components.
+- API resources and domain models should stay separate.
 
 ## Commands
 

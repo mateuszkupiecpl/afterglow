@@ -1,112 +1,201 @@
-# Decision log
+# Decision Log
 
-Ten plik powinien być aktualizowany przy każdej ważnej decyzji projektowej.
+Update this file whenever an important product or architecture decision becomes
+accepted. This file is currently authoritative for accepted decisions.
 
 ## 2026-05-22
 
-### Decyzja: aplikacja web/PWA zamiast natywnej aplikacji iOS
+### Decision: Web/PWA Instead Of Native iOS
 
 Status: accepted
 
-Uzasadnienie:
+Rationale:
 
-- treści 18+ mogą mieć problem z App Store,
-- PWA działa na iPhone, Androidzie i desktopie,
-- łatwiejsze aktualizowanie treści,
-- stack pasuje do kompetencji autora.
+- 18+ content may face App Store constraints.
+- PWA works on iPhone, Android, and desktop.
+- Decks and content can be updated more easily.
+- The stack fits the author's React, TypeScript, and Java direction.
 
-### Decyzja: roboczy stack frontend
+### Decision: Working Frontend Stack
 
 Status: accepted
 
 Frontend:
 
-- React,
-- TypeScript,
-- Vite,
-- PWA,
-- IndexedDB/Dexie,
+- React.
+- TypeScript.
+- Vite.
+- PWA.
+- IndexedDB/Dexie.
 - Cache API.
 
-### Decyzja: roboczy stack backend
+### Decision: Working Backend Stack
 
 Status: accepted
 
 Backend:
 
-- Java 25 LTS,
-- Spring Boot 4.x,
-- WebSocket / STOMP,
-- PostgreSQL później,
-- Redis później.
+- Java 25 LTS.
+- Spring Boot 4.x.
+- WebSocket / STOMP.
+- PostgreSQL later.
+- Redis later.
 
-### Decyzja: multiplayer przez serwer, nie Bluetooth
-
-Status: accepted
-
-Uzasadnienie:
-
-- Bluetooth na iOS/PWA jest złym kierunkiem,
-- WebSocket i pokoje gry są prostsze, skalowalne i bardziej przewidywalne.
-
-### Decyzja: pikantna wersja poza App Store
+### Decision: Multiplayer Through Server Rooms, Not Bluetooth
 
 Status: accepted
 
-Uzasadnienie:
+Rationale:
 
-- ograniczenia Apple dla treści seksualnych,
-- większa swoboda web/PWA.
+- Bluetooth is a poor fit for iOS/PWA.
+- WebSocket and game rooms are simpler, more scalable, and more predictable.
 
-### Decyzja: gracze mają kilka kart na ręce
+### Decision: Spicy Version Outside The App Store
 
 Status: accepted
 
-Założenie:
+Rationale:
 
-- start: 4 karty,
-- limit: 5 kart,
-- dobieranie po zagraniu.
+- Apple restrictions for sexual content.
+- More freedom through web/PWA distribution.
 
-Cel:
+### Decision: Players Have Several Cards In Hand
 
-- mniej losowości,
-- większe poczucie kontroli,
-- więcej strategii.
+Status: accepted
 
-### Decyzja: rekomendowany fundament mechaniczny
+Assumption:
+
+- Start: 4 cards.
+- Limit: 5 cards.
+- Draw after playing.
+
+Goal:
+
+- Less randomness.
+- More player control.
+- More strategy.
+
+### Decision: Recommended Mechanical Foundation
 
 Status: proposed / strong recommendation
 
-- 5 kart na ręce,
-- 3 punkty akcji,
-- reakcje i kontry,
-- event rundy,
-- tor atmosfery,
-- głosowania grupowe.
+- 5-card hand.
+- 3 action points.
+- Reactions and counters.
+- Round event.
+- Atmosphere track.
+- Group voting.
 
-### Decyzja: nazwa robocza
+### Decision: Working Name
 
 Status: proposed
 
-- Product name: `Afterglow`,
-- Frontend repo: `afterglow-ui`,
+- Product name: `Afterglow`.
+- Frontend repo: `afterglow-ui`.
 - Backend repo: `afterglow`.
 
-### Decyzja: publiczne UGC poza MVP
+### Decision: Public UGC Outside MVP
 
 Status: accepted
 
-Na start unikać publicznych talii użytkowników, publicznych profili, komentarzy, czatu i matchmakingu.
+Avoid public user decks, public profiles, comments, chat, and matchmaking in the
+MVP.
 
-Uzasadnienie:
+Rationale:
 
-- moderacja,
-- ryzyko prawne,
-- złożoność produktu.
+- Moderation.
+- Legal risk.
+- Product complexity.
 
-### Decyzja: granice graczy są twardym ograniczeniem
+### Decision: Player Boundaries Are Hard Constraints
 
 Status: accepted
 
-System nie powinien losować lub wymuszać kart naruszających ustawione granice uczestników.
+The system must not draw or force cards that violate boundaries configured by
+the participants of the task.
+
+## 2026-05-26
+
+### Decision: Project Has An Architectural Learning Goal
+
+Status: accepted
+
+Afterglow is not only about delivering a working MVP. It is also a project for
+improving software design skills, practicing Domain-Driven Design, domain-first
+thinking, maintainable architecture, and explicit modelling.
+
+### Decision: Backend Uses Hexagonal Architecture
+
+Status: accepted
+
+Backend implementation should use Hexagonal Architecture / Ports and Adapters
+with visible separation between `domain`, `application`, `infrastructure`, and
+`api`.
+
+Rules:
+
+- Domain logic must not depend on Spring, HTTP, persistence, or framework
+  concerns.
+- Infrastructure adapts to the domain, not the opposite.
+- The application layer orchestrates use cases.
+- The domain owns business rules.
+
+### Decision: API Uses Resources, Not DTOs
+
+Status: accepted
+
+API-facing models must be separate classes and use the `Resource` suffix, for
+example `PlayerResource`, `GameSessionResource`, and `CardResource`.
+
+Do not use the `DTO` suffix for API-facing models.
+
+Domain Model != API Resource.
+
+Use a HATEOAS-inspired API approach.
+
+### Decision: Frontend Stack And Tooling
+
+Status: accepted
+
+Frontend stack:
+
+- React.
+- TypeScript.
+- Vite.
+- PWA.
+- Axios.
+
+Development tooling:
+
+- Storybook for isolated UI development.
+- MSW for mocked API flows and gameplay scenarios.
+
+### Decision: Backend Tests Use Groovy And Spock
+
+Status: accepted
+
+Backend tests use Groovy and Spock.
+
+Structure:
+
+```text
+src/test/groovy
+|-- unit/
+`-- integration/
+```
+
+Unit tests extend `Specification`, stay fast and isolated, and do not boot a
+Spring context.
+
+Integration tests extend `IntegrationTestSpecification`.
+
+`IntegrationTestSpecification` is responsible for Spring context bootstrapping,
+future DB support, future security setup, shared fixtures, reusable test
+utilities, and integration helpers.
+
+### Decision: Backend Integration Strategy
+
+Status: accepted
+
+- WireMock for external dependency mocking.
+- RestTemplate for integration/test calls.

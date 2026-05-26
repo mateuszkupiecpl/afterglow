@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Accepted
 
 ## Context
 
@@ -19,6 +19,14 @@ The proposed frontend platform is React, TypeScript, Vite, and PWA. The MVP
 should start as a local one-device game. Backend and multiplayer can come later
 through Java 25 LTS, Spring Boot 4.x, and WebSocket/STOMP rooms.
 
+Frontend API work should use Axios. Storybook is the expected tool for isolated
+UI development, and MSW is the expected tool for mocked API flows and gameplay
+scenarios.
+
+Backend implementation should use Hexagonal Architecture / Ports and Adapters,
+with domain, application, infrastructure, and API/resource concerns kept
+separate.
+
 ## Rationale
 
 - PWA can run on iPhone, Android, desktop, and tablet from one frontend.
@@ -27,6 +35,8 @@ through Java 25 LTS, Spring Boot 4.x, and WebSocket/STOMP rooms.
 - Card decks and content can be updated more easily than in a native app.
 - The stack matches the planned React, TypeScript, and Java direction.
 - Bluetooth is not the preferred multiplayer path for iOS/PWA.
+- The backend is also a vehicle for practicing DDD and explicit modelling, not
+  only a delivery shortcut.
 
 ## Consequences
 
@@ -36,4 +46,6 @@ through Java 25 LTS, Spring Boot 4.x, and WebSocket/STOMP rooms.
   or re-downloads.
 - Multiplayer should be designed around server rooms and WebSocket when it is
   added.
+- API-facing models should be resources, not domain objects, and use the
+  `Resource` suffix instead of `DTO`.
 - A lighter App Store version remains TBD.
