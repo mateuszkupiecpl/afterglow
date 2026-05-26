@@ -19,6 +19,9 @@ local one-device MVP.
   interaction examples.
 - Use MSW to mock API flows, backend resources, and gameplay scenarios.
 - Use Axios for HTTP calls once API-backed flows exist.
+- Treat `/api` as the backend entry point when API-backed flows exist.
+- Prefer backend-provided HATEOAS links for session actions over hardcoded
+  frontend URL construction.
 - Keep local fixtures or MSW handlers clearly separate from production API
   client code.
 

@@ -59,6 +59,12 @@ Rules:
 
 Use a HATEOAS-inspired API approach.
 
+API resources that expose links should use `RepresentationModel`; do not wrap
+API resources in `EntityModel`.
+
+Add links to API resources only through classes with the `LinkAssembler` suffix,
+for example `GameSessionLinkAssembler`.
+
 Domain Model != API Resource.
 
 API-facing models must be separate classes and use the `Resource` suffix:

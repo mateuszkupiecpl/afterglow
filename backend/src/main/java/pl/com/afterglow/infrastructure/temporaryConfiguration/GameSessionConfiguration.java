@@ -1,4 +1,4 @@
-package pl.com.afterglow.infrastructure;
+package pl.com.afterglow.infrastructure.temporaryConfiguration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

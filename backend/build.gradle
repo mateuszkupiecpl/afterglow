@@ -22,10 +22,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	testImplementation platform('org.spockframework:spock-bom:2.4-groovy-4.0')
+	testImplementation platform('org.spockframework:spock-bom:2.4-groovy-5.0')
 	testImplementation 'org.spockframework:spock-core'
 	testImplementation 'org.spockframework:spock-spring'
 

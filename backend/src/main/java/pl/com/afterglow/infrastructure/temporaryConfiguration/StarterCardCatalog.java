@@ -1,4 +1,4 @@
-package pl.com.afterglow.infrastructure;
+package pl.com.afterglow.infrastructure.temporaryConfiguration;
 
 import pl.com.afterglow.domain.BoundaryTag;
 import pl.com.afterglow.domain.Card;

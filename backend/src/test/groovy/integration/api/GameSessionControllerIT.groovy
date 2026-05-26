@@ -4,6 +4,17 @@ import integration.IntegrationTestSpecification
 
 class GameSessionControllerIT extends IntegrationTestSpecification {
 
+	def 'exposes API home links'() {
+		when:
+		def response = get('/api')
+
+		then:
+		response.statusCode.value() == 200
+		response.body._links.self.href ==~ /.*\/api/
+		response.body._links.createGameSession.href ==~ /.*\/api\/game-sessions/
+		response.body._links.findGameSessionByCode.href.contains('/api/game-sessions/code/')
+	}
+
 	def 'creates setup session with adult-confirmed host'() {
 		when:
 		def response = post('/api/game-sessions', [
@@ -23,7 +34,9 @@ class GameSessionControllerIT extends IntegrationTestSpecification {
 		def session = response.body
 		session.code ==~ /AGL-[0-9]{3}/
 		session.status == 'setup'
-		session.links.self == "/api/game-sessions/${session.id}"
+		session._links.self.href ==~ /.*\/api\/game-sessions\/${session.id}/
+		session._links.addPlayer.href ==~ /.*\/api\/game-sessions\/${session.id}\/players/
+		session._links.start.href ==~ /.*\/api\/game-sessions\/${session.id}\/start/
 		session.players[0].nickname == 'Host'
 		session.players[0].host == true
 		session.players[0].comfortProfile.confirmedAdult == true

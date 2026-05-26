@@ -151,7 +151,14 @@ Do not use the `DTO` suffix for API-facing models.
 
 Domain Model != API Resource.
 
-Use a HATEOAS-inspired API approach.
+Use a HATEOAS-inspired API approach. Backend responses use Spring HATEOAS
+links, and `/api` is the API home resource for frontend entry links.
+
+API resources that expose links use `RepresentationModel`; they are not wrapped
+in `EntityModel`.
+
+Links are added to API resources only through classes with the `LinkAssembler`
+suffix, for example `GameSessionLinkAssembler`.
 
 ### Decision: Frontend Stack And Tooling
 

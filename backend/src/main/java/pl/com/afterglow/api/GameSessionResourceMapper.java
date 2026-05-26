@@ -1,6 +1,5 @@
 package pl.com.afterglow.api;
 
-import org.springframework.stereotype.Component;
 import pl.com.afterglow.application.DiceRollResult;
 import pl.com.afterglow.domain.BoundaryTag;
 import pl.com.afterglow.domain.Card;
@@ -14,6 +13,7 @@ import pl.com.afterglow.domain.PlayedCard;
 import pl.com.afterglow.domain.Player;
 import pl.com.afterglow.domain.SpiceLevel;
 import pl.com.afterglow.domain.port.CardCatalog;
+import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -83,8 +83,7 @@ class GameSessionResourceMapper {
 				new LinkedHashMap<>(session.score()),
 				playedCardResource(session.currentCard()),
 				session.createdAt(),
-				session.updatedAt(),
-				links(session)
+				session.updatedAt()
 		);
 	}
 
@@ -190,10 +189,4 @@ class GameSessionResourceMapper {
 				.collect(Collectors.toUnmodifiableSet());
 	}
 
-	private Map<String, String> links(GameSession session) {
-		return Map.of(
-				"self", "/api/game-sessions/" + session.id(),
-				"byCode", "/api/game-sessions/code/" + session.code()
-		);
-	}
 }

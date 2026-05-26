@@ -70,6 +70,10 @@ API-facing models.
 
 Use a HATEOAS-inspired API approach. Resources may expose identifiers, current
 state, links, and available actions when those make client flows clearer.
+API resources that expose links should use `RepresentationModel`; do not wrap
+API resources in `EntityModel`.
+Add links to API resources only through classes with the `LinkAssembler` suffix,
+for example `GameSessionLinkAssembler`.
 
 ## Migration Notes
 

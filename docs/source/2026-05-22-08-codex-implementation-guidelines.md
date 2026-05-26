@@ -62,6 +62,10 @@ If documents conflict:
 API:
 
 - Use a HATEOAS-inspired approach.
+- API resources that expose links should use `RepresentationModel`; do not wrap
+  API resources in `EntityModel`.
+- Add links to API resources only through classes with the `LinkAssembler`
+  suffix.
 - API models are separate from domain models.
 - Use the `Resource` suffix, for example `PlayerResource`,
   `GameSessionResource`, and `CardResource`.

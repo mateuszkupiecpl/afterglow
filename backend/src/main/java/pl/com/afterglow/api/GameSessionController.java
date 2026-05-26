@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.afterglow.application.GameSessionApplicationService;
+import pl.com.afterglow.domain.GameSession;
 
 import java.net.URI;
 
@@ -18,26 +19,32 @@ class GameSessionController {
 
 	private final GameSessionApplicationService gameSessions;
 	private final GameSessionResourceMapper mapper;
+	private final GameSessionLinkAssembler links;
 
-	GameSessionController(GameSessionApplicationService gameSessions, GameSessionResourceMapper mapper) {
+	GameSessionController(
+			GameSessionApplicationService gameSessions,
+			GameSessionResourceMapper mapper,
+			GameSessionLinkAssembler links
+	) {
 		this.gameSessions = gameSessions;
 		this.mapper = mapper;
+		this.links = links;
 	}
 
 	@PostMapping
 	ResponseEntity<GameSessionResource> create(@Valid @RequestBody CreateGameSessionRequest request) {
-		GameSessionResource resource = mapper.toResource(gameSessions.create(mapper.toCommand(request)));
-		return ResponseEntity.created(URI.create("/api/game-sessions/" + resource.id())).body(resource);
+		GameSessionResource resource = toResource(gameSessions.create(mapper.toCommand(request)));
+		return ResponseEntity.created(URI.create(resource.getRequiredLink("self").getHref())).body(resource);
 	}
 
 	@GetMapping("/{sessionId}")
 	GameSessionResource findById(@PathVariable String sessionId) {
-		return mapper.toResource(gameSessions.findById(sessionId));
+		return toResource(gameSessions.findById(sessionId));
 	}
 
 	@GetMapping("/code/{code}")
 	GameSessionResource findByCode(@PathVariable String code) {
-		return mapper.toResource(gameSessions.findByCode(code));
+		return toResource(gameSessions.findByCode(code));
 	}
 
 	@PostMapping("/{sessionId}/players")
@@ -45,12 +52,12 @@ class GameSessionController {
 			@PathVariable String sessionId,
 			@Valid @RequestBody AddPlayerRequest request
 	) {
-		return mapper.toResource(gameSessions.addPlayer(sessionId, mapper.toCommand(request)));
+		return toResource(gameSessions.addPlayer(sessionId, mapper.toCommand(request)));
 	}
 
 	@PostMapping("/{sessionId}/start")
 	GameSessionResource start(@PathVariable String sessionId) {
-		return mapper.toResource(gameSessions.start(sessionId));
+		return toResource(gameSessions.start(sessionId));
 	}
 
 	@PostMapping("/{sessionId}/cards/play")
@@ -58,7 +65,7 @@ class GameSessionController {
 			@PathVariable String sessionId,
 			@Valid @RequestBody PlayCardRequest request
 	) {
-		return mapper.toResource(gameSessions.playCard(sessionId, mapper.toCommand(request)));
+		return toResource(gameSessions.playCard(sessionId, mapper.toCommand(request)));
 	}
 
 	@PostMapping("/{sessionId}/current-card/complete")
@@ -66,7 +73,7 @@ class GameSessionController {
 			@PathVariable String sessionId,
 			@Valid @RequestBody ResolveCurrentCardRequest request
 	) {
-		return mapper.toResource(gameSessions.completeCurrentCard(sessionId, mapper.toCommand(request)));
+		return toResource(gameSessions.completeCurrentCard(sessionId, mapper.toCommand(request)));
 	}
 
 	@PostMapping("/{sessionId}/current-card/refuse")
@@ -74,7 +81,7 @@ class GameSessionController {
 			@PathVariable String sessionId,
 			@Valid @RequestBody ResolveCurrentCardRequest request
 	) {
-		return mapper.toResource(gameSessions.refuseCurrentCard(sessionId, mapper.toCommand(request)));
+		return toResource(gameSessions.refuseCurrentCard(sessionId, mapper.toCommand(request)));
 	}
 
 	@PostMapping("/{sessionId}/dice-rolls")
@@ -87,6 +94,10 @@ class GameSessionController {
 
 	@PostMapping("/{sessionId}/finish")
 	GameSessionResource finish(@PathVariable String sessionId) {
-		return mapper.toResource(gameSessions.finish(sessionId));
+		return toResource(gameSessions.finish(sessionId));
+	}
+
+	private GameSessionResource toResource(GameSession session) {
+		return links.addLinks(session, mapper.toResource(session));
 	}
 }

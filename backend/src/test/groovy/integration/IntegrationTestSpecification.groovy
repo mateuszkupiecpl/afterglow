@@ -30,6 +30,10 @@ abstract class IntegrationTestSpecification extends Specification {
 		restTemplate.postForEntity(url(path), new HttpEntity<>(body, headers), Map)
 	}
 
+	protected ResponseEntity<Map> get(String path) {
+		restTemplate.getForEntity(url(path), Map)
+	}
+
 	private String url(String path) {
 		"http://localhost:${port}${path}"
 	}

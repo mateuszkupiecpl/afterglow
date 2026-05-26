@@ -33,6 +33,14 @@ begins, follow these rules.
 ## API Rules
 
 - Use a HATEOAS-inspired API style.
+- Use Spring HATEOAS for backend response links.
+- API resource classes that expose links should use `RepresentationModel`;
+  do not wrap API resources in `EntityModel`.
+- Add links to API resources only through classes with the `LinkAssembler`
+  suffix, for example `GameSessionLinkAssembler`.
+- Expose `/api` as the API home resource for frontend entry links.
+- Session resources should expose state-specific action links instead of
+  requiring the frontend to construct every action URL.
 - API-facing models are resources, not domain objects.
 - Use the `Resource` suffix, for example `PlayerResource`,
   `GameSessionResource`, and `CardResource`.
