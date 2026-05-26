@@ -2,7 +2,7 @@ package integration.api
 
 import integration.IntegrationTestSpecification
 
-class GameSessionControllerSpec extends IntegrationTestSpecification {
+class GameSessionControllerIT extends IntegrationTestSpecification {
 
 	def 'creates setup session with adult-confirmed host'() {
 		when:

@@ -184,10 +184,11 @@ src/test/groovy
 `-- integration/
 ```
 
-Unit tests extend `Specification`, stay fast and isolated, and do not boot a
-Spring context.
+Unit test classes use the `Test` suffix, extend `Specification`, stay fast and
+isolated, and do not boot a Spring context.
 
-Integration tests extend `IntegrationTestSpecification`.
+Integration test classes use the `IT` suffix and extend
+`IntegrationTestSpecification`.
 
 `IntegrationTestSpecification` is responsible for Spring context bootstrapping,
 future DB support, future security setup, shared fixtures, reusable test

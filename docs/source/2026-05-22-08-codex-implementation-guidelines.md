@@ -72,8 +72,10 @@ Backend tests:
 - Groovy + Spock.
 - `src/test/groovy/unit` for fast unit tests.
 - `src/test/groovy/integration` for integration tests.
-- Unit tests extend `Specification` and do not boot Spring context.
-- Integration tests extend `IntegrationTestSpecification`.
+- Unit test classes use the `Test` suffix, extend `Specification`, and do not
+  boot Spring context.
+- Integration test classes use the `IT` suffix and extend
+  `IntegrationTestSpecification`.
 - `IntegrationTestSpecification` owns Spring context bootstrapping, future DB
   support, future security setup, shared fixtures, reusable utilities, and
   integration helpers.

@@ -29,8 +29,8 @@ like a simple random task generator.
 - Backend: Java 25 LTS and Spring Boot 4.x in a later stage.
 - Backend architecture: Hexagonal Architecture with clear domain, application,
   infrastructure, and API/resource boundaries.
-- Backend testing: Groovy and Spock, with fast unit tests separated from Spring
-  integration tests.
+- Backend testing: Groovy and Spock, with unit test classes ending in `Test`
+  and Spring integration test classes ending in `IT`.
 - Multiplayer: server rooms with WebSocket/STOMP, not Bluetooth.
 - Database/cache for later backend stages: PostgreSQL and Redis, both TBD for
   timing and necessity.

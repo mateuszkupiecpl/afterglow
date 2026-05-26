@@ -21,6 +21,7 @@ src/test/groovy
 
 Unit tests:
 
+- use the `Test` suffix,
 - extend `Specification`,
 - do not boot a Spring context,
 - are fast and isolated,
@@ -34,7 +35,7 @@ package unit.domain
 
 import spock.lang.Specification
 
-class CardEligibilityPolicySpec extends Specification {
+class CardEligibilityPolicyTest extends Specification {
     def "rejects a card when it violates a player boundary"() {
         expect:
         // domain-only expectation here
@@ -46,6 +47,7 @@ class CardEligibilityPolicySpec extends Specification {
 
 Integration tests:
 
+- use the `IT` suffix,
 - extend `IntegrationTestSpecification`,
 - verify Spring wiring, adapters, persistence, API mapping, and integration
   behavior,
@@ -65,7 +67,9 @@ Example:
 ```groovy
 package integration.api
 
-class GameSessionResourceIntegrationSpec extends IntegrationTestSpecification {
+import integration.IntegrationTestSpecification
+
+class GameSessionResourceIT extends IntegrationTestSpecification {
     def "creates a local game session through the API"() {
         expect:
         // integration expectation here

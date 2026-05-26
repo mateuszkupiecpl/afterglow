@@ -17,7 +17,7 @@ import spock.lang.Specification
 import java.time.Instant
 import java.util.function.Supplier
 
-class GameSessionSpec extends Specification {
+class GameSessionTest extends Specification {
 
 	def 'does not deal cards that violate participant boundaries'() {
 		given:
