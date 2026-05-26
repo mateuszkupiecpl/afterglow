@@ -12,10 +12,14 @@ This document defines the backend testing strategy for future implementation.
 ## Directory Structure
 
 ```text
-src/test/groovy
+backend/src/test/groovy
 |-- unit/
 `-- integration/
 ```
+
+Test package names follow the test lane directly. Use packages such as
+`unit.domain`, `integration`, and `integration.api`; do not add a removed
+`backend.game` package segment.
 
 ## Unit Tests
 

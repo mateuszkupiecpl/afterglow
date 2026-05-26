@@ -1,17 +1,17 @@
 package unit.domain
 
-import pl.com.afterglow.backend.game.domain.BoundaryTag
-import pl.com.afterglow.backend.game.domain.Card
-import pl.com.afterglow.backend.game.domain.CardTarget
-import pl.com.afterglow.backend.game.domain.CardType
-import pl.com.afterglow.backend.game.domain.ComfortProfile
-import pl.com.afterglow.backend.game.domain.GameMode
-import pl.com.afterglow.backend.game.domain.GamePace
-import pl.com.afterglow.backend.game.domain.GameSession
-import pl.com.afterglow.backend.game.domain.GameSettings
-import pl.com.afterglow.backend.game.domain.InvalidGameActionException
-import pl.com.afterglow.backend.game.domain.Player
-import pl.com.afterglow.backend.game.domain.SpiceLevel
+import pl.com.afterglow.domain.BoundaryTag
+import pl.com.afterglow.domain.Card
+import pl.com.afterglow.domain.CardTarget
+import pl.com.afterglow.domain.CardType
+import pl.com.afterglow.domain.ComfortProfile
+import pl.com.afterglow.domain.GameMode
+import pl.com.afterglow.domain.GamePace
+import pl.com.afterglow.domain.GameSession
+import pl.com.afterglow.domain.GameSettings
+import pl.com.afterglow.domain.InvalidGameActionException
+import pl.com.afterglow.domain.Player
+import pl.com.afterglow.domain.SpiceLevel
 import spock.lang.Specification
 
 import java.time.Instant

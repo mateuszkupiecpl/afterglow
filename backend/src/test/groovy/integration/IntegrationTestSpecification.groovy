@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.http.client.ClientHttpResponse
 import org.springframework.web.client.ResponseErrorHandler
 import org.springframework.web.client.RestTemplate
-import pl.com.afterglow.backend.Application
+import pl.com.afterglow.Application
 import spock.lang.Specification
 
 @SpringBootTest(classes = Application, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
