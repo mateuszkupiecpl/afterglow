@@ -1,10 +1,5 @@
 package pl.com.afterglow.application;
 
-import pl.com.afterglow.domain.BoundaryTag;
-import pl.com.afterglow.domain.GameMode;
-import pl.com.afterglow.domain.GamePace;
-import pl.com.afterglow.domain.SpiceLevel;
-
 import java.util.Set;
 
 public final class GameSessionCommands {
@@ -15,23 +10,23 @@ public final class GameSessionCommands {
 	public record CreateGameSessionCommand(
 			String hostNickname,
 			boolean confirmedAdult,
-			GameMode mode,
+			String mode,
 			GameSettingsCommand settings,
-			Set<BoundaryTag> boundaries
+			Set<String> boundaries
 	) {
 	}
 
 	public record AddPlayerCommand(
 			String nickname,
 			boolean confirmedAdult,
-			Set<BoundaryTag> boundaries
+			Set<String> boundaries
 	) {
 	}
 
 	public record GameSettingsCommand(
-			SpiceLevel startSpiceLevel,
-			SpiceLevel maxSpiceLevel,
-			GamePace pace,
+			String startSpiceLevel,
+			String maxSpiceLevel,
+			String pace,
 			Boolean allowProps,
 			Boolean allowPairTasks,
 			Boolean allowGroupTasks

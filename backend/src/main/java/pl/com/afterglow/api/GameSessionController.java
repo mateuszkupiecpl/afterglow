@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.afterglow.application.GameSessionApplicationService;
-import pl.com.afterglow.domain.GameSession;
+import pl.com.afterglow.application.GameSessionSnapshot;
 
 import java.net.URI;
 
@@ -97,7 +97,7 @@ class GameSessionController {
 		return toResource(gameSessions.finish(sessionId));
 	}
 
-	private GameSessionResource toResource(GameSession session) {
+	private GameSessionResource toResource(GameSessionSnapshot session) {
 		return links.addLinks(session, mapper.toResource(session));
 	}
 }

@@ -1,4 +1,4 @@
-package pl.com.afterglow.infrastructure.temporaryConfiguration;
+package pl.com.afterglow.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,16 +20,6 @@ class GameSessionConfiguration {
 	@Bean
 	Random random() {
 		return new Random();
-	}
-
-	@Bean
-	CardCatalog cardCatalog() {
-		return new StarterCardCatalog();
-	}
-
-	@Bean
-	GameSessionRepository gameSessionRepository() {
-		return new InMemoryGameSessionRepository();
 	}
 
 	@Bean

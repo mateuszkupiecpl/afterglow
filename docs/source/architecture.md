@@ -45,6 +45,13 @@ visible enough that later backend and multiplayer work can grow cleanly.
 - The application layer orchestrates use cases.
 - The domain owns business rules, invariants, and policies.
 - Game-domain logic stays separate from UI and transport concerns.
+- API code depends on application contracts, not domain entities, value
+  objects, or domain ports.
+- Application services may use domain objects and domain ports internally, but
+  expose application commands, queries, snapshots/read models, and application
+  exceptions to the API layer.
+- Port interfaces are intentionally public where adapters and application code
+  need them. Adapter implementations stay package-private in infrastructure.
 
 ## Modelling Rules
 

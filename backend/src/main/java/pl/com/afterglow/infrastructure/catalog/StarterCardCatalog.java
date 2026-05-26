@@ -1,5 +1,6 @@
-package pl.com.afterglow.infrastructure.temporaryConfiguration;
+package pl.com.afterglow.infrastructure.catalog;
 
+import org.springframework.stereotype.Component;
 import pl.com.afterglow.domain.BoundaryTag;
 import pl.com.afterglow.domain.Card;
 import pl.com.afterglow.domain.CardTarget;
@@ -14,13 +15,19 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static pl.com.afterglow.application.GameSessionApplicationService.STARTER_DECK_ID;
+@Component
+final class StarterCardCatalog implements CardCatalog {
 
-public final class StarterCardCatalog implements CardCatalog {
+	private static final String STARTER_DECK_ID = "starter";
 
 	private final List<Card> starterCards = starterCards();
 	private final Map<String, Card> cardsById = starterCards.stream()
 			.collect(Collectors.toUnmodifiableMap(Card::id, Function.identity()));
+
+	@Override
+	public List<String> defaultDeckIds() {
+		return List.of(STARTER_DECK_ID);
+	}
 
 	@Override
 	public List<Card> findByDeckIds(List<String> deckIds) {

@@ -53,6 +53,11 @@ Rules:
 - Infrastructure adapts to the domain, not the opposite.
 - The application layer orchestrates use cases.
 - The domain owns business rules.
+- API code depends on application commands, queries, snapshots/read models, and
+  application exceptions. It must not import domain model or domain port types.
+- Domain ports are public boundary interfaces for application services and
+  infrastructure adapters. Adapter implementations should stay package-private
+  in infrastructure packages.
 - Do not overengineer, but keep architectural boundaries visible.
 
 ## API Design

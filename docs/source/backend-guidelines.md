@@ -21,6 +21,28 @@ begins, follow these rules.
   configuration, and implementations of ports.
 - `api/` owns request/response resources and mapping to the application layer.
 
+## Visibility And Dependency Boundaries
+
+- Keep each layer's public surface intentional and small.
+- `api/` may depend on public application use cases, commands, queries,
+  application snapshots/read models, and application exceptions.
+- `api/` must not import `domain/` or `domain/port/` types. Domain objects are
+  not request or response contracts.
+- `application/` may depend on the domain model and domain ports. It translates
+  incoming codes and commands into domain values, orchestrates use cases, and
+  returns application snapshots/read models instead of domain aggregates.
+- `domain/port/` interfaces are public because application services and
+  infrastructure adapters must compile against them. They may expose domain
+  model types; that does not make those types API contracts.
+- `infrastructure/` implements ports and owns Spring configuration. Adapter
+  implementations should be package-private and wired through public port
+  interfaces.
+- Do not move adapter classes into `domain/` only to hide them. If a class
+  talks to persistence, content storage, Spring, or external systems, it belongs
+  in `infrastructure/`.
+- Domain helper classes should be package-private when they are not needed by
+  application services, ports, adapters, or tests.
+
 ## Domain Rules
 
 - Domain code must not depend on Spring annotations, HTTP concepts, database

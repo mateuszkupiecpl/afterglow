@@ -1,25 +1,10 @@
 package pl.com.afterglow.api;
 
 import pl.com.afterglow.application.DiceRollResult;
-import pl.com.afterglow.domain.BoundaryTag;
-import pl.com.afterglow.domain.Card;
-import pl.com.afterglow.domain.CardInstance;
-import pl.com.afterglow.domain.CodedEnum;
-import pl.com.afterglow.domain.GameMode;
-import pl.com.afterglow.domain.GamePace;
-import pl.com.afterglow.domain.GameSession;
-import pl.com.afterglow.domain.InvalidGameActionException;
-import pl.com.afterglow.domain.PlayedCard;
-import pl.com.afterglow.domain.Player;
-import pl.com.afterglow.domain.SpiceLevel;
-import pl.com.afterglow.domain.port.CardCatalog;
+import pl.com.afterglow.application.GameSessionSnapshot;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static pl.com.afterglow.application.GameSessionCommands.AddPlayerCommand;
 import static pl.com.afterglow.application.GameSessionCommands.CreateGameSessionCommand;
@@ -31,19 +16,13 @@ import static pl.com.afterglow.application.GameSessionCommands.ResolveCurrentCar
 @Component
 class GameSessionResourceMapper {
 
-	private final CardCatalog cardCatalog;
-
-	GameSessionResourceMapper(CardCatalog cardCatalog) {
-		this.cardCatalog = cardCatalog;
-	}
-
 	CreateGameSessionCommand toCommand(CreateGameSessionRequest request) {
 		return new CreateGameSessionCommand(
 				request.hostNickname(),
 				Boolean.TRUE.equals(request.confirmedAdult()),
-				GameMode.fromCode(request.mode()),
+				request.mode(),
 				settingsCommand(request.settings()),
-				boundaries(request.boundaries())
+				request.boundaries()
 		);
 	}
 
@@ -51,7 +30,7 @@ class GameSessionResourceMapper {
 		return new AddPlayerCommand(
 				request.nickname(),
 				Boolean.TRUE.equals(request.confirmedAdult()),
-				boundaries(request.boundaries())
+				request.boundaries()
 		);
 	}
 
@@ -67,19 +46,19 @@ class GameSessionResourceMapper {
 		return new DiceRollCommand(request.playerId());
 	}
 
-	GameSessionResource toResource(GameSession session) {
+	GameSessionResource toResource(GameSessionSnapshot session) {
 		return new GameSessionResource(
 				session.id(),
 				session.code(),
-				session.mode().code(),
-				session.status().code(),
+				session.mode(),
+				session.status(),
 				session.players().stream().map(this::playerResource).toList(),
 				settingsResource(session),
 				session.deckIds(),
 				session.currentRound(),
 				session.currentTurnPlayerId(),
 				session.atmosphereLevel(),
-				session.currentSpiceLevel().code(),
+				session.currentSpiceLevel(),
 				new LinkedHashMap<>(session.score()),
 				playedCardResource(session.currentCard()),
 				session.createdAt(),
@@ -96,26 +75,16 @@ class GameSessionResourceMapper {
 			return null;
 		}
 		return new GameSettingsCommand(
-				SpiceLevel.fromCode(request.startSpiceLevel()),
-				SpiceLevel.fromCode(request.maxSpiceLevel()),
-				GamePace.fromCode(request.pace()),
+				request.startSpiceLevel(),
+				request.maxSpiceLevel(),
+				request.pace(),
 				request.allowProps(),
 				request.allowPairTasks(),
 				request.allowGroupTasks()
 		);
 	}
 
-	private Set<BoundaryTag> boundaries(Set<String> boundaries) {
-		if (boundaries == null || boundaries.isEmpty()) {
-			return Set.of();
-		}
-		return boundaries.stream()
-				.map(BoundaryTag::fromCode)
-				.filter(Objects::nonNull)
-				.collect(Collectors.toUnmodifiableSet());
-	}
-
-	private PlayerResource playerResource(Player player) {
+	private PlayerResource playerResource(GameSessionSnapshot.PlayerSnapshot player) {
 		return new PlayerResource(
 				player.id(),
 				player.nickname(),
@@ -125,35 +94,35 @@ class GameSessionResourceMapper {
 				new ComfortProfileResource(
 						player.comfortProfile().playerId(),
 						player.comfortProfile().confirmedAdult(),
-						codes(player.comfortProfile().boundaries())
+						player.comfortProfile().boundaries()
 				)
 		);
 	}
 
-	private GameSettingsResource settingsResource(GameSession session) {
+	private GameSettingsResource settingsResource(GameSessionSnapshot session) {
 		return new GameSettingsResource(
 				session.settings().minPlayers(),
 				session.settings().maxPlayers(),
-				session.settings().startSpiceLevel().code(),
-				session.settings().maxSpiceLevel().code(),
-				session.settings().pace().code(),
+				session.settings().startSpiceLevel(),
+				session.settings().maxSpiceLevel(),
+				session.settings().pace(),
 				session.settings().allowProps(),
 				session.settings().allowPairTasks(),
 				session.settings().allowGroupTasks()
 		);
 	}
 
-	private CardInstanceResource cardInstanceResource(CardInstance cardInstance) {
+	private CardInstanceResource cardInstanceResource(GameSessionSnapshot.CardInstanceSnapshot cardInstance) {
 		return new CardInstanceResource(
 				cardInstance.instanceId(),
 				cardInstance.cardId(),
 				cardInstance.ownerPlayerId(),
-				cardInstance.visibility().code(),
-				cardResource(cardInstance.cardId())
+				cardInstance.visibility(),
+				cardResource(cardInstance.card())
 		);
 	}
 
-	private PlayedCardResource playedCardResource(PlayedCard playedCard) {
+	private PlayedCardResource playedCardResource(GameSessionSnapshot.PlayedCardSnapshot playedCard) {
 		if (playedCard == null) {
 			return null;
 		}
@@ -161,32 +130,24 @@ class GameSessionResourceMapper {
 				playedCard.cardInstanceId(),
 				playedCard.playerId(),
 				playedCard.targetPlayerId(),
-				cardResource(playedCard.cardId()),
+				cardResource(playedCard.card()),
 				playedCard.playedAt()
 		);
 	}
 
-	private CardResource cardResource(String cardId) {
-		var card = cardCatalog.findById(cardId)
-				.orElseThrow(() -> new InvalidGameActionException("Card is not available: " + cardId));
+	private CardResource cardResource(GameSessionSnapshot.CardSnapshot card) {
 		return new CardResource(
 				card.id(),
 				card.deckId(),
 				card.title(),
-				card.type().code(),
+				card.type(),
 				card.text(),
-				card.spiceLevel().code(),
+				card.spiceLevel(),
 				card.actionPointCost(),
-				card.target().code(),
+				card.target(),
 				card.requiresProps(),
-				codes(card.boundaries())
+				card.boundaries()
 		);
-	}
-
-	private Set<String> codes(Set<? extends CodedEnum> values) {
-		return values.stream()
-				.map(CodedEnum::code)
-				.collect(Collectors.toUnmodifiableSet());
 	}
 
 }

@@ -210,3 +210,24 @@ Status: accepted
 
 - WireMock for external dependency mocking.
 - RestTemplate for integration/test calls.
+
+### Decision: Backend Layer Visibility Boundaries
+
+Status: accepted
+
+API code depends on application-layer contracts only: use cases, commands,
+queries, snapshots/read models, and application exceptions.
+
+Rules:
+
+- API code must not import domain model or domain port types.
+- Application services may use domain objects and domain ports internally.
+- Application services return application snapshots/read models instead of
+  exposing domain aggregates to controllers.
+- Domain ports are public boundary interfaces for application and
+  infrastructure. They may expose domain model types without making those types
+  API contracts.
+- Infrastructure adapter implementations should be package-private and wired
+  through public port interfaces.
+- Adapter classes stay in infrastructure; do not move them into domain only to
+  reduce Java visibility.

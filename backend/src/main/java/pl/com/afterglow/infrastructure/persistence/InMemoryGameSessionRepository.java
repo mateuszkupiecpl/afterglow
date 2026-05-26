@@ -1,5 +1,6 @@
-package pl.com.afterglow.infrastructure.temporaryConfiguration;
+package pl.com.afterglow.infrastructure.persistence;
 
+import org.springframework.stereotype.Repository;
 import pl.com.afterglow.domain.GameSession;
 import pl.com.afterglow.domain.port.GameSessionRepository;
 
@@ -8,7 +9,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class InMemoryGameSessionRepository implements GameSessionRepository {
+@Repository
+final class InMemoryGameSessionRepository implements GameSessionRepository {
 
 	private final Map<String, GameSession> sessionsById = new ConcurrentHashMap<>();
 	private final Map<String, String> sessionIdsByCode = new ConcurrentHashMap<>();
@@ -36,6 +38,6 @@ public final class InMemoryGameSessionRepository implements GameSessionRepositor
 	}
 
 	private String normalizeCode(String code) {
-        return code == null ? "" : code.trim().toUpperCase(Locale.ROOT);
+		return code == null ? "" : code.trim().toUpperCase(Locale.ROOT);
 	}
 }
