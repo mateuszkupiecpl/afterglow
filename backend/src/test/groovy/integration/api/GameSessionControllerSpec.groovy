@@ -1,14 +1,8 @@
-package pl.com.afterglow.backend.game
+package integration.api
 
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-import org.springframework.boot.test.web.server.LocalServerPort
-import pl.com.afterglow.backend.IntegrationTestSpecification
+import integration.IntegrationTestSpecification
 
-class GameSessionControllerTests extends IntegrationTestSpecification {
-
-	@LocalServerPort
-	int port
+class GameSessionControllerSpec extends IntegrationTestSpecification {
 
 	def 'creates setup session with adult-confirmed host'() {
 		when:
@@ -23,12 +17,13 @@ class GameSessionControllerTests extends IntegrationTestSpecification {
 		])
 
 		then:
-		response.status == 201
+		response.statusCode.value() == 201
 
 		and:
 		def session = response.body
 		session.code ==~ /AGL-[0-9]{3}/
 		session.status == 'setup'
+		session.links.self == "/api/game-sessions/${session.id}"
 		session.players[0].nickname == 'Host'
 		session.players[0].host == true
 		session.players[0].comfortProfile.confirmedAdult == true
@@ -44,7 +39,7 @@ class GameSessionControllerTests extends IntegrationTestSpecification {
 		])
 
 		then:
-		response.status == 409
+		response.statusCode.value() == 409
 		response.body.error == 'invalid_game_action'
 	}
 
@@ -57,7 +52,7 @@ class GameSessionControllerTests extends IntegrationTestSpecification {
 		def response = post("/api/game-sessions/${session.id}/start", null)
 
 		then:
-		response.status == 200
+		response.statusCode.value() == 200
 
 		and:
 		def started = response.body
@@ -84,7 +79,7 @@ class GameSessionControllerTests extends IntegrationTestSpecification {
 		def response = post("/api/game-sessions/${session.id}/start", null)
 
 		then:
-		response.status == 409
+		response.statusCode.value() == 409
 		response.body.error == 'invalid_game_action'
 	}
 
@@ -100,7 +95,7 @@ class GameSessionControllerTests extends IntegrationTestSpecification {
 				playCardBody(currentPlayer, cardInstance, otherPlayer))
 
 		then:
-		playResponse.status == 200
+		playResponse.statusCode.value() == 200
 
 		and:
 		def afterPlay = playResponse.body
@@ -114,7 +109,7 @@ class GameSessionControllerTests extends IntegrationTestSpecification {
 		])
 
 		then:
-		completeResponse.status == 200
+		completeResponse.statusCode.value() == 200
 
 		and:
 		def afterComplete = completeResponse.body
@@ -131,7 +126,7 @@ class GameSessionControllerTests extends IntegrationTestSpecification {
 		def otherPlayer = started.players.find { it.id != currentPlayer.id }
 		def cardInstance = playableCard(currentPlayer)
 		assert post("/api/game-sessions/${started.id}/cards/play",
-				playCardBody(currentPlayer, cardInstance, otherPlayer)).status == 200
+				playCardBody(currentPlayer, cardInstance, otherPlayer)).statusCode.value() == 200
 
 		when:
 		def response = post("/api/game-sessions/${started.id}/current-card/refuse", [
@@ -139,7 +134,7 @@ class GameSessionControllerTests extends IntegrationTestSpecification {
 		])
 
 		then:
-		response.status == 200
+		response.statusCode.value() == 200
 
 		and:
 		def afterRefuse = response.body
@@ -158,7 +153,7 @@ class GameSessionControllerTests extends IntegrationTestSpecification {
 		])
 
 		then:
-		response.status == 200
+		response.statusCode.value() == 200
 
 		and:
 		def roll = response.body
@@ -168,21 +163,21 @@ class GameSessionControllerTests extends IntegrationTestSpecification {
 		roll.value <= 6
 	}
 
-	private createSession(nickname) {
+	private createSession(String nickname) {
 		def response = post('/api/game-sessions', [
 				hostNickname : nickname,
 				confirmedAdult: true
 		])
-		assert response.status == 201
+		assert response.statusCode.value() == 201
 		response.body
 	}
 
-	private addPlayer(sessionId, nickname) {
+	private addPlayer(String sessionId, String nickname) {
 		def response = post("/api/game-sessions/${sessionId}/players", [
 				nickname      : nickname,
 				confirmedAdult: true
 		])
-		assert response.status == 200
+		assert response.statusCode.value() == 200
 		response.body
 	}
 
@@ -190,28 +185,8 @@ class GameSessionControllerTests extends IntegrationTestSpecification {
 		def session = createSession('Host')
 		addPlayer(session.id, 'Guest')
 		def response = post("/api/game-sessions/${session.id}/start", null)
-		assert response.status == 200
+		assert response.statusCode.value() == 200
 		response.body
-	}
-
-	private post(path, body) {
-		def connection = "http://localhost:${port}${path}".toURL().openConnection()
-		connection.requestMethod = 'POST'
-		connection.doOutput = true
-		connection.setRequestProperty('Content-Type', 'application/json')
-		connection.outputStream.withWriter('UTF-8') { writer ->
-			writer << (body == null ? '' : JsonOutput.toJson(body))
-		}
-		def responseBody = readResponseBody(connection)
-		[
-				status: connection.responseCode,
-				body  : responseBody.isBlank() ? null : new JsonSlurper().parseText(responseBody)
-		]
-	}
-
-	private static readResponseBody(connection) {
-		def stream = connection.responseCode >= 400 ? connection.errorStream : connection.inputStream
-		stream == null ? '' : stream.getText('UTF-8')
 	}
 
 	private static playableCard(player) {
