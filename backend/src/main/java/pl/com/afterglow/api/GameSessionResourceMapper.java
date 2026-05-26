@@ -167,7 +167,7 @@ class GameSessionResourceMapper {
 	}
 
 	private CardResource cardResource(String cardId) {
-		Card card = cardCatalog.findById(cardId)
+		var card = cardCatalog.findById(cardId)
 				.orElseThrow(() -> new InvalidGameActionException("Card is not available: " + cardId));
 		return new CardResource(
 				card.id(),

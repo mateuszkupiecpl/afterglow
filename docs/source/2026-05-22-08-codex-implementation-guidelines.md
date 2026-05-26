@@ -58,6 +58,9 @@ If documents conflict:
 - REST for decks and configuration.
 - WebSocket for multiplayer in a later stage.
 - Do not complicate the early project with microservices.
+- Use `var` for Java local variables when the type can be inferred clearly.
+  Keep explicit types for fields, constants, method parameters, return types,
+  record components, and public API signatures.
 
 API:
 

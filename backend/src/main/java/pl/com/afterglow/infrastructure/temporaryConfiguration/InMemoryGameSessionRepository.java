@@ -36,6 +36,6 @@ public final class InMemoryGameSessionRepository implements GameSessionRepositor
 	}
 
 	private String normalizeCode(String code) {
-		return code == null ? "" : code.trim().toUpperCase(Locale.ROOT);
+        return code == null ? "" : code.trim().toUpperCase(Locale.ROOT);
 	}
 }

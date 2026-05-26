@@ -9,8 +9,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 class HomeLinkAssembler {
 
-	RepresentationModel<?> toModel() {
-		RepresentationModel<?> model = new RepresentationModel<>();
+	RepresentationModel<?> toModel(RepresentationModel<?> model) {
 		model.add(linkTo(methodOn(HomeController.class).home()).withSelfRel());
 		model.add(linkTo(methodOn(GameSessionController.class).create(null)).withRel("createGameSession"));
 		model.add(linkTo(methodOn(GameSessionController.class).findByCode("{code}")).withRel("findGameSessionByCode"));

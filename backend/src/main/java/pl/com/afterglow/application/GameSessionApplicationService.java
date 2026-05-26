@@ -46,16 +46,16 @@ public final class GameSessionApplicationService {
 	}
 
 	public GameSession create(CreateGameSessionCommand command) {
-		GameSettings settings = buildSettings(command.settings());
-		String hostPlayerId = newId();
-		Instant now = clock.instant();
-		Player host = new Player(
+		var settings = buildSettings(command.settings());
+		var hostPlayerId = newId();
+		var now = clock.instant();
+		var host = new Player(
 				hostPlayerId,
 				command.hostNickname(),
 				true,
 				new ComfortProfile(hostPlayerId, command.confirmedAdult(), command.boundaries())
 		);
-		GameSession session = new GameSession(
+		var session = new GameSession(
 				newId(),
 				newSessionCode(),
 				command.mode() == null ? GameMode.PARTY_WARMUP : command.mode(),
@@ -74,15 +74,15 @@ public final class GameSessionApplicationService {
 	}
 
 	public GameSession findByCode(String code) {
-		String normalizedCode = code == null ? "" : code.trim().toUpperCase(Locale.ROOT);
+		var normalizedCode = code == null ? "" : code.trim().toUpperCase(Locale.ROOT);
 		return gameSessionRepository.findByCode(normalizedCode)
 				.orElseThrow(() -> new GameSessionNotFoundException(code));
 	}
 
 	public GameSession addPlayer(String sessionId, AddPlayerCommand command) {
-		GameSession session = findById(sessionId);
+		var session = findById(sessionId);
 		synchronized (session) {
-			String playerId = newId();
+			var playerId = newId();
 			session.addPlayer(
 					new Player(
 							playerId,
@@ -98,7 +98,7 @@ public final class GameSessionApplicationService {
 	}
 
 	public GameSession start(String sessionId) {
-		GameSession session = findById(sessionId);
+		var session = findById(sessionId);
 		synchronized (session) {
 			session.start(cardCatalog.findByDeckIds(session.deckIds()), random, this::newId, clock.instant());
 			gameSessionRepository.save(session);
@@ -107,7 +107,7 @@ public final class GameSessionApplicationService {
 	}
 
 	public GameSession playCard(String sessionId, PlayCardCommand command) {
-		GameSession session = findById(sessionId);
+		var session = findById(sessionId);
 		synchronized (session) {
 			session.playCard(
 					command.playerId(),
@@ -124,7 +124,7 @@ public final class GameSessionApplicationService {
 	}
 
 	public GameSession completeCurrentCard(String sessionId, ResolveCurrentCardCommand command) {
-		GameSession session = findById(sessionId);
+		var session = findById(sessionId);
 		synchronized (session) {
 			session.completeCurrentCard(command.playerId(), clock.instant());
 			gameSessionRepository.save(session);
@@ -133,7 +133,7 @@ public final class GameSessionApplicationService {
 	}
 
 	public GameSession refuseCurrentCard(String sessionId, ResolveCurrentCardCommand command) {
-		GameSession session = findById(sessionId);
+		var session = findById(sessionId);
 		synchronized (session) {
 			session.refuseCurrentCard(command.playerId(), clock.instant());
 			gameSessionRepository.save(session);
@@ -142,7 +142,7 @@ public final class GameSessionApplicationService {
 	}
 
 	public DiceRollResult rollDie(String sessionId, DiceRollCommand command) {
-		GameSession session = findById(sessionId);
+		var session = findById(sessionId);
 		synchronized (session) {
 			session.verifyDiceRollAllowed(command.playerId());
 			return new DiceRollResult(session.id(), command.playerId(), random.nextInt(1, 7), clock.instant());
@@ -150,7 +150,7 @@ public final class GameSessionApplicationService {
 	}
 
 	public GameSession finish(String sessionId) {
-		GameSession session = findById(sessionId);
+		var session = findById(sessionId);
 		synchronized (session) {
 			session.finish(clock.instant());
 			gameSessionRepository.save(session);
@@ -159,13 +159,13 @@ public final class GameSessionApplicationService {
 	}
 
 	private GameSettings buildSettings(GameSettingsCommand command) {
-		SpiceLevel startSpiceLevel = command == null || command.startSpiceLevel() == null
+		var startSpiceLevel = command == null || command.startSpiceLevel() == null
 				? SpiceLevel.WARMUP
 				: command.startSpiceLevel();
-		SpiceLevel maxSpiceLevel = command == null || command.maxSpiceLevel() == null
+		var maxSpiceLevel = command == null || command.maxSpiceLevel() == null
 				? SpiceLevel.COURAGE
 				: command.maxSpiceLevel();
-		GamePace pace = command == null || command.pace() == null ? GamePace.STANDARD : command.pace();
+		var pace = command == null || command.pace() == null ? GamePace.STANDARD : command.pace();
 		return new GameSettings(
 				GameSession.MIN_PLAYERS,
 				GameSession.MAX_PLAYERS,
@@ -183,7 +183,7 @@ public final class GameSessionApplicationService {
 	}
 
 	private String newSessionCode() {
-		String code;
+		var code = "";
 		do {
 			code = "AGL-%03d".formatted(random.nextInt(1000));
 		}

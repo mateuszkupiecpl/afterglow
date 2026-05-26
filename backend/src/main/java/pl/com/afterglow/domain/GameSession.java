@@ -85,9 +85,9 @@ public final class GameSession {
 		}
 		drawPile.clear();
 		drawPile.addAll(buildDrawPile(availableCards, random));
-		for (Player player : players) {
+		for (var player : players) {
 			player.clearHand();
-			for (int index = 0; index < STARTING_HAND_SIZE; index++) {
+			for (var index = 0; index < STARTING_HAND_SIZE; index++) {
 				player.receive(drawCardFor(player.id(), availableCards, random, idGenerator));
 			}
 		}
@@ -117,10 +117,10 @@ public final class GameSession {
 			throw new InvalidGameActionException("Only the current turn player can play a card.");
 		}
 
-		Player player = requirePlayer(playerId);
-		CardInstance cardInstance = player.findCardInstance(cardInstanceId)
+		var player = requirePlayer(playerId);
+		var cardInstance = player.findCardInstance(cardInstanceId)
 				.orElseThrow(() -> new InvalidGameActionException("Card is not in the player's hand."));
-		Card card = requireCard(cardsById(availableCards), cardInstance.cardId());
+		var card = requireCard(cardsById(availableCards), cardInstance.cardId());
 		validateTarget(card, targetPlayerId);
 
 		player.removeCardFromHand(cardInstanceId);
@@ -139,7 +139,7 @@ public final class GameSession {
 
 	public void completeCurrentCard(String playerId, Instant now) {
 		requireCurrentCardOwner(playerId);
-		Player player = requirePlayer(playerId);
+		var player = requirePlayer(playerId);
 		player.addPoint();
 		score.put(player.id(), player.points());
 		atmosphereLevel = Math.min(MAX_ATMOSPHERE_LEVEL, atmosphereLevel + 1);
@@ -149,7 +149,7 @@ public final class GameSession {
 
 	public void refuseCurrentCard(String playerId, Instant now) {
 		requireCurrentCardOwner(playerId);
-		Player player = requirePlayer(playerId);
+		var player = requirePlayer(playerId);
 		player.removePointWithoutGoingBelowZero();
 		score.put(player.id(), player.points());
 		advanceTurn();
@@ -235,10 +235,10 @@ public final class GameSession {
 	}
 
 	private List<String> buildDrawPile(List<Card> availableCards, Random random) {
-		Set<BoundaryTag> sessionBoundaries = players.stream()
+		var sessionBoundaries = players.stream()
 				.flatMap(player -> player.comfortProfile().boundaries().stream())
 				.collect(Collectors.toCollection(() -> EnumSet.noneOf(BoundaryTag.class)));
-		List<String> eligibleCards = availableCards.stream()
+		var eligibleCards = availableCards.stream()
 				.filter(card -> card.spiceLevel().isAtMost(settings.maxSpiceLevel()))
 				.filter(card -> settings.allowProps() || !card.requiresProps())
 				.filter(card -> settings.allowPairTasks() || card.target() != CardTarget.PAIR)
@@ -249,7 +249,7 @@ public final class GameSession {
 		if (eligibleCards.isEmpty()) {
 			throw new InvalidGameActionException("No cards match the session settings and player boundaries.");
 		}
-		List<String> newDrawPile = new ArrayList<>();
+		var newDrawPile = new ArrayList<String>();
 		while (newDrawPile.size() < players.size() * HAND_LIMIT * 4) {
 			newDrawPile.addAll(eligibleCards);
 		}
@@ -278,7 +278,7 @@ public final class GameSession {
 			if (targetPlayerId == null || targetPlayerId.isBlank()) {
 				throw new InvalidGameActionException("This card requires a target player.");
 			}
-			Player targetPlayer = requirePlayer(targetPlayerId);
+			var targetPlayer = requirePlayer(targetPlayerId);
 			if (!Collections.disjoint(card.boundaries(), targetPlayer.comfortProfile().boundaries())) {
 				throw new InvalidGameActionException("The selected card conflicts with the target player's boundaries.");
 			}
@@ -312,7 +312,7 @@ public final class GameSession {
 	}
 
 	private Card requireCard(Map<String, Card> cardsById, String cardId) {
-		Card card = cardsById.get(cardId);
+		var card = cardsById.get(cardId);
 		if (card == null) {
 			throw new InvalidGameActionException("Card is not available: " + cardId);
 		}

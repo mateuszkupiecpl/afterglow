@@ -139,6 +139,9 @@ Rules:
 - Infrastructure adapts to the domain, not the opposite.
 - The application layer orchestrates use cases.
 - The domain owns business rules.
+- Java backend code uses `var` for local variables when the type can be inferred
+  clearly. Fields, constants, method parameters, return types, record
+  components, and public API signatures keep explicit types.
 
 ### Decision: API Uses Resources, Not DTOs
 

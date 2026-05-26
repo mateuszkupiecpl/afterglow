@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 class HomeController {
 
-	private final HomeLinkAssembler links;
+	private final HomeLinkAssembler linkAssembler;
 
-	HomeController(HomeLinkAssembler links) {
-		this.links = links;
+	HomeController(HomeLinkAssembler linkAssembler) {
+		this.linkAssembler = linkAssembler;
 	}
 
 	@GetMapping
 	RepresentationModel<?> home() {
-		return links.toModel();
+		var model = new RepresentationModel<>();
+		return linkAssembler.toModel(model);
 	}
 }

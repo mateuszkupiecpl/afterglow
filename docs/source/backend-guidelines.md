@@ -51,6 +51,9 @@ begins, follow these rules.
 ## Implementation Guidance
 
 - Prefer explicit classes and names over generic maps or stringly typed flows.
+- In Java backend code, use `var` for local variables when Java can infer the
+  type clearly. Keep explicit types for fields, constants, method parameters,
+  return types, record components, and public API signatures.
 - Do not introduce microservices for the early project.
 - Keep controllers thin.
 - Keep orchestration in application use cases.

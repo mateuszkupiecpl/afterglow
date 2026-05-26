@@ -61,7 +61,7 @@ public final class Player {
 
 	CardInstance removeCardFromHand(String cardInstanceId) {
 		for (int index = 0; index < hand.size(); index++) {
-			CardInstance card = hand.get(index);
+			var card = hand.get(index);
 			if (card.instanceId().equals(cardInstanceId)) {
 				return hand.remove(index);
 			}
@@ -78,7 +78,7 @@ public final class Player {
 	}
 
 	private static String normalizeNickname(String nickname) {
-		String normalized = nickname == null ? "" : nickname.trim();
+		var normalized = nickname == null ? "" : nickname.trim();
 		if (normalized.isBlank()) {
 			throw new InvalidGameActionException("Nickname is required.");
 		}

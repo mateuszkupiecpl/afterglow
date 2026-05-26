@@ -33,7 +33,7 @@ class GameSessionController {
 
 	@PostMapping
 	ResponseEntity<GameSessionResource> create(@Valid @RequestBody CreateGameSessionRequest request) {
-		GameSessionResource resource = toResource(gameSessions.create(mapper.toCommand(request)));
+		var resource = toResource(gameSessions.create(mapper.toCommand(request)));
 		return ResponseEntity.created(URI.create(resource.getRequiredLink("self").getHref())).body(resource);
 	}
 

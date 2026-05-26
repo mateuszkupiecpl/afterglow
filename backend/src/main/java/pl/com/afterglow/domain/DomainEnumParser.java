@@ -12,7 +12,7 @@ final class DomainEnumParser {
 		if (value == null || value.isBlank()) {
 			return null;
 		}
-		String normalized = value.trim().toLowerCase(Locale.ROOT);
+		var normalized = value.trim().toLowerCase(Locale.ROOT);
 		return Arrays.stream(enumType.getEnumConstants())
 				.filter(candidate -> candidate.code().equals(normalized))
 				.findFirst()

@@ -24,6 +24,9 @@ new application structure unless the user explicitly asks for implementation.
 - Do not introduce AI features.
 - Do not implement features outside the MVP without an explicit request.
 - Prefer simple, readable code when implementation begins.
+- In Java backend code, use `var` for local variables when the type can be
+  inferred clearly. Keep explicit types for fields, constants, method
+  parameters, return types, record components, and public API signatures.
 - Keep game-domain logic separate from UI.
 - Use domain-first thinking and DDD vocabulary where it clarifies the model.
 - Prefer explicit modelling over generic data bags or CRUD-shaped shortcuts.
