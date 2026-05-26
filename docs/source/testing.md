@@ -32,6 +32,11 @@ Unit tests:
 - focus heavily on domain behavior, policies, value objects, and use-case
   decisions.
 
+Do not widen Java production visibility for tests. Groovy/Spock can exercise
+non-public Java classes and members, so package-private domain objects and
+methods may stay package-private when production code does not need them as a
+contract.
+
 Example:
 
 ```groovy

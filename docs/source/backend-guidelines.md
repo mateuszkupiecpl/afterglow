@@ -41,7 +41,11 @@ begins, follow these rules.
   talks to persistence, content storage, Spring, or external systems, it belongs
   in `infrastructure/`.
 - Domain helper classes should be package-private when they are not needed by
-  application services, ports, adapters, or tests.
+  application services, ports, or adapters.
+- Do not make Java production classes, constructors, or methods public only so
+  Groovy/Spock tests can access them. Spock tests may exercise non-public Java
+  types and members; production visibility should be driven by production
+  dependency boundaries only.
 
 ## Domain Rules
 

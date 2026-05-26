@@ -52,6 +52,9 @@ visible enough that later backend and multiplayer work can grow cleanly.
   exceptions to the API layer.
 - Port interfaces are intentionally public where adapters and application code
   need them. Adapter implementations stay package-private in infrastructure.
+- Test access never justifies public production visibility. Groovy/Spock tests
+  may reach non-public Java types and members, so visibility follows production
+  boundaries only.
 
 ## Modelling Rules
 

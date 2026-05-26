@@ -231,3 +231,6 @@ Rules:
   through public port interfaces.
 - Adapter classes stay in infrastructure; do not move them into domain only to
   reduce Java visibility.
+- Java production classes, constructors, and methods must not be made public
+  only for tests. Groovy/Spock tests may exercise non-public Java types and
+  members, so production visibility is based on production dependencies only.
