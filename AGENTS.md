@@ -48,6 +48,8 @@ new application structure unless the user explicitly asks for implementation.
   visible without overengineering.
 - Domain logic must not depend on Spring, HTTP, persistence, or framework
   concerns.
+- Keep backend package boundaries enforced with ArchUnit tests when new layers
+  or cross-layer dependencies are introduced.
 - Infrastructure adapts to the domain, not the other way around.
 - The application layer orchestrates use cases with commands and queries.
 - The domain owns business rules, policies, entities, value objects, domain

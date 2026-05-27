@@ -24,6 +24,8 @@ begins, follow these rules.
 ## Visibility And Dependency Boundaries
 
 - Keep each layer's public surface intentional and small.
+- Keep backend package boundaries enforced with ArchUnit tests when new layers
+  or cross-layer dependencies are introduced.
 - `api/` may depend on public application use cases, commands, queries,
   application snapshots/read models, and application exceptions.
 - `api/` must not import `domain/` or `domain/port/` types. Domain objects are

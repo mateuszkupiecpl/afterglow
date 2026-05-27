@@ -36,6 +36,8 @@ If documents conflict:
 
 - Use Hexagonal Architecture / Ports and Adapters.
 - Keep `domain`, `application`, `infrastructure`, and `api` visible.
+- Keep backend package boundaries enforced with ArchUnit tests when new layers
+  or cross-layer dependencies are introduced.
 - Domain code must not depend on Spring, HTTP, persistence, or framework
   concerns.
 - Infrastructure adapts to the domain, not the opposite.
