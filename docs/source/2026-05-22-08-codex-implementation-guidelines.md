@@ -1,75 +1,139 @@
-# Codex implementation guidelines
+# Codex Implementation Guidelines
 
-Ten dokument zawiera instrukcje dla Codex lub innego agenta kodującego pracującego w repozytorium.
+This document contains instructions for Codex or any other coding agent working
+in this repository.
 
-## Priorytet decyzji
+## Decision Priority
 
-Jeśli dokumenty są sprzeczne:
+If documents conflict:
 
-1. Nowszy dokument z datą `YYYY-MM-DD` ma pierwszeństwo.
-2. `decision-log.md` ma pierwszeństwo nad starszymi opisami koncepcyjnymi.
-3. MVP scope ma pierwszeństwo nad pomysłami „na kiedyś”.
-4. Nie implementować funkcji poza MVP bez wyraźnego polecenia.
+1. Newer dated documents take priority over older notes on the same topic.
+2. `2026-05-22-decision-log.md` takes priority over older concept notes.
+3. MVP scope takes priority over later-stage ideas.
+4. Do not implement features outside MVP without an explicit request.
 
-## Styl implementacji
+## Implementation Style
 
-- Preferować prosty, czytelny kod.
-- Nie dodawać ciężkich zależności bez potrzeby.
-- Oddzielać logikę domenową gry od UI.
-- Projektować typy TypeScript tak, aby łatwo dało się je później zmapować na backend Java.
-- Unikać trzymania dużych assetów w repozytorium, chyba że są mockami/testowymi.
-- Nie kodować treści kart bez metadanych poziomu, typu i granic.
+- Prefer simple, readable code.
+- Prefer DDD, domain-first thinking, and explicit modelling.
+- Do not optimize only for the shortest implementation if the domain deserves
+  separation.
+- Do not add heavy dependencies without need.
+- Keep game-domain logic separate from UI.
+- Do not avoid additional classes when they improve clarity.
+- Prefer a rich domain model over an anemic model when objects have business
+  rules.
+- Use domain value object wrappers for concepts with validation, ranges, or
+  behavior instead of raw primitives. Do not add a `ValueObject` suffix; name
+  wrappers after the domain concept.
+- Avoid god classes, generic utility containers, and giant service classes.
+- Design TypeScript domain types so they can later map cleanly to Java models.
+- Avoid storing large assets in the repository unless they are mocks or tests.
+- Do not hardcode card content without metadata for type, spice level, target,
+  and boundaries.
 
-## Frontend - oczekiwania
+## Backend Architecture
 
-- React + TypeScript + Vite.
-- Komponenty mobilne-first.
-- UI wygodne na iPhonie.
-- PWA od początku albo bardzo wcześnie.
-- Dane kart na start mogą być fixturem lokalnym.
-- Stan gry powinien być możliwy do serializacji.
-- Logika gry powinna być testowalna bez UI.
+- Use Hexagonal Architecture / Ports and Adapters.
+- Keep `domain`, `application`, `infrastructure`, and `api` visible.
+- Keep backend package boundaries enforced with ArchUnit tests when new layers
+  or cross-layer dependencies are introduced.
+- Domain code must not depend on Spring, HTTP, persistence, or framework
+  concerns.
+- Infrastructure adapts to the domain, not the opposite.
+- The application layer orchestrates use cases, commands, and queries.
+- The domain owns entities, value objects, domain services, repository ports,
+  domain policies, and business rules.
 
-## Backend - oczekiwania
+## Frontend Expectations
+
+- React + TypeScript + Vite + PWA + Axios.
+- Mobile-first components.
+- UI comfortable on iPhone.
+- PWA from the start or very early.
+- Storybook for isolated UI development.
+- MSW for mocking API flows and gameplay scenarios.
+- Card data may start as local fixtures.
+- Game state should be serializable.
+- Game logic should be testable without UI.
+
+## Backend Expectations
 
 - Java 25 LTS + Spring Boot 4.x.
-- REST dla talii i konfiguracji.
-- WebSocket dla rozgrywki multiplayer w późniejszym etapie.
-- Na starcie nie komplikować architektury mikroserwisami, bo świat już wystarczająco cierpi.
+- REST for decks and configuration.
+- WebSocket for multiplayer in a later stage.
+- Do not complicate the early project with microservices.
+- Use `var` for Java local variables when the type can be inferred clearly.
+  Keep explicit types for fields, constants, method parameters, return types,
+  record components, and public API signatures.
 
-## Content safety
+API:
 
-Przy implementacji filtrowania kart należy traktować granice graczy jako twarde ograniczenia.
+- Use a HATEOAS-inspired approach.
+- API resources that expose links should use `RepresentationModel`; do not wrap
+  API resources in `EntityModel`.
+- Add links to API resources only through classes with the `LinkAssembler`
+  suffix.
+- API models are separate from domain models.
+- Use the `Resource` suffix, for example `PlayerResource`,
+  `GameSessionResource`, and `CardResource`.
+- Do not use the `DTO` suffix for API models.
 
-Nie losować kart, które naruszają granice uczestników zadania.
+Backend tests:
 
-## MVP first
+- Groovy + Spock.
+- `src/test/groovy/unit` for fast unit tests.
+- `src/test/groovy/integration` for integration tests.
+- Unit test classes use the `Test` suffix, extend `Specification`, and do not
+  boot Spring context.
+- Integration test classes use the `IT` suffix and extend
+  `IntegrationTestSpecification`.
+- `IntegrationTestSpecification` owns Spring context bootstrapping, future DB
+  support, future security setup, shared fixtures, reusable utilities, and
+  integration helpers.
+- Maximize domain tests; integration tests verify wiring.
 
-Najpierw zbudować lokalny, grywalny prototyp:
+Backend integrations:
 
-1. konfiguracja graczy,
-2. wybór trybu i poziomu,
-3. rozdanie kart,
-4. ręka gracza,
-5. zagranie karty,
-6. reakcja/kontra w prostej wersji,
-7. rzut kością,
-8. punktacja,
-9. odmowa,
-10. koniec gry.
+- WireMock for external dependencies.
+- RestTemplate for integration/test calls.
 
-Dopiero potem:
+## Content Safety
+
+Treat player boundaries as hard constraints.
+
+Do not draw cards that violate the boundaries of task participants.
+
+## MVP First
+
+Build the local playable prototype first:
+
+1. Player configuration.
+2. Mode and level selection.
+3. Card dealing.
+4. Player hand.
+5. Play card.
+6. Simple reaction/counter.
+7. Dice roll.
+8. Scoring.
+9. Refusal.
+10. End game.
+
+Only after that:
 
 - backend,
 - multiplayer,
-- konta,
-- płatności,
-- edytor kart,
-- AI.
+- accounts,
+- payments,
+- card editor.
 
-## Nazewnictwo robocze
+AI features are not part of the MVP and must not be introduced unless explicitly
+requested.
 
-- Produkt: `Afterglow`.
+## Working Names
+
+- Product: `Afterglow`.
 - Frontend repository: `afterglow-ui`.
 - Backend repository: `afterglow`.
-- Główna domena gry w kodzie może używać nazw: `GameSession`, `Player`, `Card`, `Deck`, `Turn`, `Reaction`, `AtmosphereTrack`, `ComfortProfile`.
+- Main game-domain names may include `GameSession`, `Player`, `Card`, `Deck`,
+  `Turn`, `Reaction`, `AtmosphereTrack`, and `ComfortProfile`.
