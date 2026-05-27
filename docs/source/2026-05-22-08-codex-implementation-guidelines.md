@@ -23,6 +23,9 @@ If documents conflict:
 - Do not avoid additional classes when they improve clarity.
 - Prefer a rich domain model over an anemic model when objects have business
   rules.
+- Use domain value object wrappers for concepts with validation, ranges, or
+  behavior instead of raw primitives. Do not add a `ValueObject` suffix; name
+  wrappers after the domain concept.
 - Avoid god classes, generic utility containers, and giant service classes.
 - Design TypeScript domain types so they can later map cleanly to Java models.
 - Avoid storing large assets in the repository unless they are mocks or tests.

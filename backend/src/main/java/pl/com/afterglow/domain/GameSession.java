@@ -1,15 +1,7 @@
 package pl.com.afterglow.domain;
 
 import java.time.Instant;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -20,8 +12,6 @@ public final class GameSession {
 	public static final int MAX_PLAYERS = 8;
 	public static final int STARTING_HAND_SIZE = 4;
 	public static final int HAND_LIMIT = 5;
-	public static final int MIN_ATMOSPHERE_LEVEL = 1;
-	public static final int MAX_ATMOSPHERE_LEVEL = 5;
 
 	private final String id;
 	private final String code;
@@ -32,7 +22,7 @@ public final class GameSession {
 	private final List<String> deckIds;
 	private int currentRound;
 	private String currentTurnPlayerId;
-	private int atmosphereLevel;
+	private AtmosphereLevel atmosphereLevel = AtmosphereLevel.starting();
 	private SpiceLevel currentSpiceLevel;
 	private final Map<String, Integer> score = new LinkedHashMap<>();
 	private final Instant createdAt;
@@ -94,7 +84,6 @@ public final class GameSession {
 		currentRound = 1;
 		currentTurnIndex = 0;
 		currentTurnPlayerId = players.getFirst().id();
-		atmosphereLevel = MIN_ATMOSPHERE_LEVEL;
 		currentSpiceLevel = settings.startSpiceLevel();
 		status = GameStatus.IN_PROGRESS;
 		touch(now);
@@ -142,7 +131,7 @@ public final class GameSession {
 		var player = requirePlayer(playerId);
 		player.addPoint();
 		score.put(player.id(), player.points());
-		atmosphereLevel = Math.min(MAX_ATMOSPHERE_LEVEL, atmosphereLevel + 1);
+		atmosphereLevel = atmosphereLevel.increase();
 		advanceTurn();
 		touch(now);
 	}
@@ -211,7 +200,7 @@ public final class GameSession {
 	}
 
 	public int atmosphereLevel() {
-		return atmosphereLevel;
+		return atmosphereLevel.value();
 	}
 
 	public SpiceLevel currentSpiceLevel() {

@@ -62,6 +62,9 @@ visible enough that later backend and multiplayer work can grow cleanly.
 - Prefer explicit modelling over generic structures.
 - Prefer a rich domain model over an anemic model when behavior and invariants
   belong with the concept.
+- Use value object wrappers for domain concepts with validation, ranges, or
+  behavior instead of raw primitives. Do not add a `ValueObject` suffix; name
+  wrappers after the domain concept.
 - Naming should communicate business meaning.
 - Avoid god classes, generic utility containers, and giant service classes.
 

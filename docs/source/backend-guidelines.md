@@ -53,6 +53,9 @@ begins, follow these rules.
   mappings, or framework lifecycle.
 - Consent, boundaries, spice limits, targeting rules, and card eligibility are
   domain rules.
+- Use domain value object wrappers for concepts with validation, ranges, or
+  behavior instead of raw primitives. Do not add a `ValueObject` suffix; name
+  wrappers after the domain concept.
 - Repository interfaces belong on the domain/application side as ports.
 - Persistence classes and Spring repositories are adapter details.
 

@@ -30,6 +30,8 @@ new application structure unless the user explicitly asks for implementation.
 - Keep game-domain logic separate from UI.
 - Use domain-first thinking and DDD vocabulary where it clarifies the model.
 - Prefer explicit modelling over generic data bags or CRUD-shaped shortcuts.
+- Use domain value object wrappers for concepts with validation, ranges, or
+  behavior instead of raw primitives. Do not add a `ValueObject` suffix.
 - Do not avoid additional classes when they communicate business meaning.
 - Prefer a rich domain model over an anemic model when business rules are
   involved.
