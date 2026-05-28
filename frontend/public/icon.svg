@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Afterglow">
+  <rect width="128" height="128" rx="18" fill="#161313"/>
+  <path d="M28 90V38c0-6.6 5.4-12 12-12h48c6.6 0 12 5.4 12 12v52c0 6.6-5.4 12-12 12H40c-6.6 0-12-5.4-12-12Z" fill="#842d3b"/>
+  <path d="M40 82c15.8-5.7 32.2-5.7 48 0V46c-15.8 5.7-32.2 5.7-48 0v36Z" fill="#f0c36a"/>
+  <path d="M64 39c8.8 13.4 8.8 36.2 0 50-8.8-13.8-8.8-36.6 0-50Z" fill="#19746f"/>
+</svg>
