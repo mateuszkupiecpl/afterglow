@@ -39,7 +39,7 @@ instead of merely slowing it down.
 - Local game state.
 - Players pass the phone.
 - No user accounts.
-- No required backend, or mock API only.
+- No required backend for the local one-device game loop.
 - Deck stored locally as JSON or TypeScript fixtures.
 
 ## Out of Scope

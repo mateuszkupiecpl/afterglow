@@ -168,16 +168,21 @@ Status: accepted
 
 Frontend stack:
 
-- React.
+- React 19.
 - TypeScript.
 - Vite.
 - PWA.
+- React Router.
+- Tailwind CSS.
+- Motion for React.
+- Zustand.
 - Axios.
+- i18next.
 
 Development tooling:
 
 - Storybook for isolated UI development.
-- MSW for mocked API flows and gameplay scenarios.
+- MSW for Storybook, UI tests, and component isolation.
 
 ### Decision: Backend Tests Use Groovy And Spock
 
@@ -246,3 +251,95 @@ Afterglow uses one monorepo with separate package directories:
   is active.
 
 Use the monorepo package layout in current project docs.
+
+### Decision: Frontend Stack And Architecture
+
+Status: accepted
+
+Frontend stack:
+
+- React 19.
+- TypeScript.
+- Vite.
+- PWA.
+- React Router.
+- Tailwind CSS.
+- Motion for React.
+- Zustand.
+- Axios.
+- i18next.
+- Storybook.
+- MSW.
+
+Frontend architecture uses feature/domain-first organization. Code should be
+organized around business capabilities rather than file types.
+
+The frontend is not only a thin rendering layer. Game flow, client-side state,
+and local interaction rules are part of the frontend domain.
+
+Rules:
+
+- Use Zustand for application state.
+- Keep stores close to their domains/features.
+- Use React Context mostly for technical providers.
+- Keep pages as feature composition points.
+- Keep domain APIs close to their features.
+- Keep technical API infrastructure in `frontend/src/api`.
+- Avoid direct backend calls inside UI components.
+- Avoid giant `App.tsx`, giant global component folders, and type-based
+  organization only.
+- Do not use Bootstrap.
+
+### Decision: Frontend Local Development Uses The Real Backend API
+
+Status: accepted
+
+Normal local frontend development must communicate with the real backend API.
+
+Do not introduce a normal frontend mock mode.
+
+MSW is allowed only for:
+
+- Storybook.
+- UI tests.
+- Component isolation.
+
+### Decision: Frontend Localization Starts Early
+
+Status: accepted
+
+Use i18next and translation keys for user-facing text from early development.
+Avoid hardcoded user-facing strings.
+
+### Decision: Frontend Design Direction
+
+Status: accepted
+
+The frontend should feel like a premium game experience rather than a
+traditional form-based application.
+
+The visual direction emphasizes dark backgrounds, premium atmosphere, elegant
+styling, game-like interactions, card-first UX, gold accents, burgundy and
+purple accents, and immersive atmosphere.
+
+Avoid an enterprise/admin panel appearance.
+
+### Decision: PWA Support Is Incremental
+
+Status: accepted
+
+Implement PWA support incrementally.
+
+Early PWA scope:
+
+- Manifest.
+- Icons.
+- Standalone mode.
+- Basic service worker.
+
+Later PWA scope:
+
+- Offline decks.
+- Cache versioning.
+- IndexedDB persistence.
+- Advanced asset cache.

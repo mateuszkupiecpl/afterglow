@@ -21,6 +21,16 @@ of choice, atmosphere, progression, consent, and interaction between players.
   engaged outside their own turns.
 - Premium tone: sensual and elegant rather than crude or pornographic in
   presentation.
+- Game-like experience: the frontend should feel immersive, playful, and
+  card-first rather than like a traditional form-based application.
+
+## Frontend Experience Direction
+
+The user experience should emphasize dark backgrounds, premium atmosphere,
+elegant styling, game-like interactions, gold accents, and burgundy or purple
+accents. It should remain mobile-first while still working well on desktop.
+
+Avoid an enterprise or admin-panel appearance.
 
 ## Planned Modes
 
@@ -40,5 +50,5 @@ the most restrictive boundaries of the participants involved in a task.
 
 - Final victory condition: TBD.
 - First deck size and content strength: TBD.
-- Final UI style direction: TBD.
+- Final detailed visual system: TBD.
 - Whether the product remains private or becomes commercial: TBD.

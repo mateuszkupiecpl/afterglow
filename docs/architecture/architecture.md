@@ -39,6 +39,15 @@ Backend responsibilities:
 Do not overengineer the early project, but keep architectural boundaries visible
 enough that backend and multiplayer work can grow cleanly later.
 
+Frontend architecture should use feature/domain-first organization. The
+frontend is not only a thin rendering layer: game flow, client-side state,
+interaction rules, and presentation orchestration are part of the frontend
+domain for the local one-device MVP.
+
+Frontend code should be organized around business capabilities rather than file
+types, with pages composing features and shared modules reserved for reusable
+technical or UI primitives.
+
 ## Dependency Rules
 
 - Domain logic must not depend on Spring, HTTP, persistence, or framework
@@ -47,6 +56,9 @@ enough that backend and multiplayer work can grow cleanly later.
 - The application layer orchestrates use cases.
 - The domain owns business rules, invariants, and policies.
 - Game-domain logic stays separate from UI and transport concerns.
+- Frontend UI components should not call the backend directly.
+- Feature-level API adapters should stay close to their features, while
+  technical API infrastructure belongs in `frontend/src/api`.
 - API code depends on application contracts, not domain entities, value objects,
   or domain ports.
 - Application services may use domain objects and domain ports internally, but

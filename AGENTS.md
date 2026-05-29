@@ -76,18 +76,32 @@ new application structure unless the user explicitly asks for implementation.
 
 ## Frontend Rules
 
-- Frontend stack: React, TypeScript, Vite, PWA, Axios.
-- Use Storybook for isolated UI development.
-- Use MSW for mocked API flows and gameplay scenarios.
+- Frontend stack: React 19, TypeScript, Vite, PWA, React Router, Tailwind CSS,
+  Motion for React, Zustand, Axios, i18next, Storybook, and MSW.
+- Use feature/domain-first organization under `frontend/src`.
+- Use Zustand for application state. Keep stores close to their features.
+- Use React Context mainly for technical providers such as i18n and app-level
+  providers.
+- Use Tailwind for styling and design-system primitives.
+- Use Motion for React for game-like animation and transitions.
+- Use Storybook for isolated UI development and component documentation.
+- Use MSW only for Storybook, UI tests, and component isolation.
+- Local development must communicate with the real backend API. Do not add a
+  normal frontend mock mode.
+- Do not use Bootstrap.
+- Avoid direct backend calls inside UI components.
 - Keep gameplay/domain logic testable outside React components.
 - API resources and domain models remain separate even in TypeScript.
+- Avoid hardcoded user-facing strings; use i18next translation keys from early
+  development.
 
 ## Current Product Direction
 
 - Product: adult web/PWA social card game.
 - Players: 2-8.
 - MVP: local one-device gameplay first.
-- Frontend: React, TypeScript, Vite, PWA, Axios.
+- Frontend: React 19, TypeScript, Vite, PWA, React Router, Tailwind CSS,
+  Motion for React, Zustand, Axios, i18next, Storybook, and MSW.
 - Backend: Java 25 LTS and Spring Boot 4.x later, mainly for rooms and
   multiplayer.
 - Public UGC, matchmaking, chat, payments, and native iOS are outside MVP.

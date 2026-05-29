@@ -16,11 +16,9 @@ This document tracks unresolved decisions from the current source material.
 
 ## Technology
 
-- First frontend version: fully local without backend or with mock API.
-- React state management: Zustand, Redux Toolkit, TanStack Store, React Context,
-  or another option.
-- MVP card data format: JSON, TypeScript fixtures, or mocked backend.
+- MVP card data format: JSON fixtures, TypeScript fixtures, or real backend API.
 - Exact PWA asset/versioning contract.
+- Exact timing for backend-backed local development flows.
 
 ## Content
 

@@ -2,17 +2,25 @@
 
 ## Frontend
 
-- React.
+- React 19.
 - TypeScript.
 - Vite.
 - PWA.
-- Axios for API calls.
 - React Router.
+- Tailwind CSS for styling and design-system primitives.
+- Motion for React for animations and transitions.
+- Zustand for client application state.
+- Axios for backend communication.
+- i18next for localization.
 - Storybook for isolated UI development.
-- MSW for mocked API flows and gameplay scenarios.
+- MSW for Storybook mocks and UI tests only.
 - Mobile-first UI, especially comfortable on iPhone.
-- State management: TBD, candidates include Zustand, Redux Toolkit, TanStack
-  Store, or React Context for an early prototype.
+
+Do not use Bootstrap.
+
+Normal local development must communicate with the real backend API. Do not add
+a frontend mock mode for normal local development. Mocks are allowed only for
+Storybook, UI tests, and component isolation.
 
 ## Local Data and Cache
 
@@ -71,6 +79,4 @@ state, and links or available actions when that improves client clarity.
 ## Unknowns
 
 - Hosting provider: TBD.
-- Final state management choice: TBD.
-- Whether MVP has no backend or a mock API: TBD.
 - Exact deck and asset versioning contract: TBD.

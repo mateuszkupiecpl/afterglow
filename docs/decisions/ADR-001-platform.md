@@ -15,13 +15,12 @@ review constraints for the spicy version.
 
 Build the first version as a web/PWA application rather than a native iOS app.
 
-The proposed frontend platform is React, TypeScript, Vite, and PWA. The MVP
-should start as a local one-device game. Backend and multiplayer can come later
-through Java 25 LTS, Spring Boot 4.x, and WebSocket/STOMP rooms.
+The frontend platform is React 19, TypeScript, Vite, and PWA. The MVP should
+start as a local one-device game. Backend and multiplayer can come later through
+Java 25 LTS, Spring Boot 4.x, and WebSocket/STOMP rooms.
 
 Frontend API work should use Axios. Storybook is the expected tool for isolated
-UI development, and MSW is the expected tool for mocked API flows and gameplay
-scenarios.
+UI development. MSW is only for Storybook, UI tests, and component isolation.
 
 Backend implementation should use Hexagonal Architecture / Ports and Adapters,
 with domain, application, infrastructure, and API/resource concerns kept
@@ -41,6 +40,8 @@ separate.
 ## Consequences
 
 - The first version should prioritize browser and mobile PWA constraints.
+- Normal local frontend development should communicate with the real backend
+  API when API-backed flows exist.
 - Native iOS features are not assumed.
 - Storage/cache cannot be treated as permanent; the app must tolerate refreshes
   or re-downloads.

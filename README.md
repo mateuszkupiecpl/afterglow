@@ -23,9 +23,10 @@ like a simple random task generator.
 
 ## Planned Stack
 
-- Frontend: React, TypeScript, Vite, PWA, Axios.
-- Frontend tooling: Storybook for isolated UI work and MSW for mocked API flows
-  and gameplay scenarios.
+- Frontend: React 19, TypeScript, Vite, PWA, React Router, Tailwind CSS,
+  Motion for React, Zustand, Axios, and i18next.
+- Frontend tooling: Storybook for isolated UI work and component documentation;
+  MSW for Storybook mocks and UI tests only.
 - Local storage/cache: IndexedDB/Dexie and Cache API.
 - Backend: Java 25 LTS and Spring Boot 4.x in a later stage.
 - Backend architecture: Hexagonal Architecture with clear domain, application,
@@ -35,6 +36,14 @@ like a simple random task generator.
 - Multiplayer: server rooms with WebSocket/STOMP, not Bluetooth.
 - Database/cache for later backend stages: PostgreSQL and Redis, both TBD for
   timing and necessity.
+
+## Frontend Direction
+
+The frontend should feel like a premium game experience, not a traditional
+form-based application. It is mobile-first, desktop-friendly, card-first,
+immersive, and organized around domain features. Normal local development should
+communicate with the real backend API; mock flows are reserved for Storybook,
+UI tests, and component isolation.
 
 ## Documentation Map
 
