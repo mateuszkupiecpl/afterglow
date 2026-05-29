@@ -1,8 +1,10 @@
 export const gameSessionMessages = {
   common: {
     api: 'API',
+    english: 'English',
     local: 'Local',
     player: 'Player',
+    polish: 'Polish',
     points: '{{count}} points',
   },
   game: {
@@ -38,6 +40,7 @@ export const gameSessionMessages = {
   header: {
     brand: 'Afterglow',
     dataSource: 'Data source',
+    language: 'Language',
     oneDeviceSession: 'One-device session',
     results: 'Results',
   },

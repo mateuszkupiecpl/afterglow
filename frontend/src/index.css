@@ -117,6 +117,13 @@ img {
   background: rgba(248, 243, 238, 0.07);
 }
 
+.topbar-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
 .source-switch {
   display: inline-grid;
   grid-template-columns: repeat(2, minmax(4rem, 1fr));
@@ -678,6 +685,10 @@ img {
 
   .source-switch {
     width: 100%;
+  }
+
+  .topbar-controls {
+    justify-content: stretch;
   }
 
   .screen-copy,
