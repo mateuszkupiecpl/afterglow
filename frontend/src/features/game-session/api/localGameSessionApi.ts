@@ -16,6 +16,7 @@ import type {
 } from './gameSessionResources'
 import { spiceLevels } from './gameSessionResources'
 import { starterCards } from '../../cards/api/starterCards'
+import i18n from '../../../i18n/i18n'
 
 const apiRoot = '/api'
 const minPlayers = 2
@@ -33,7 +34,7 @@ export function createLocalGameSessionApi(): GameSessionApi {
 
   function createSession(request: CreateGameSessionRequest): Promise<GameSessionResource> {
     if (!request.confirmedAdult) {
-      return reject('Every player must confirm they are 18+ before joining.')
+      return rejectKey('errors.everyPlayerAdultConfirmed')
     }
 
     const now = new Date().toISOString()
@@ -67,7 +68,7 @@ export function createLocalGameSessionApi(): GameSessionApi {
     const session = [...sessions.values()].find((candidate) => candidate.code.toLowerCase() === code.toLowerCase())
 
     if (!session) {
-      return reject('No local session uses that code.')
+      return rejectKey('errors.noLocalSessionForCode')
     }
 
     return resolveWithLinks(session)
@@ -76,13 +77,13 @@ export function createLocalGameSessionApi(): GameSessionApi {
   function addPlayer(sessionResource: GameSessionResource, request: AddPlayerRequest): Promise<GameSessionResource> {
     return withSession(sessionResource.id, (session) => {
       if (session.status !== 'setup') {
-        throw new Error('Players can only be added before the session starts.')
+        throw errorKey('errors.addPlayersBeforeStart')
       }
       if (!request.confirmedAdult) {
-        throw new Error('Every player must confirm they are 18+ before joining.')
+        throw errorKey('errors.everyPlayerAdultConfirmed')
       }
       if (session.players.length >= session.settings.maxPlayers) {
-        throw new Error('This session already has the maximum number of players.')
+        throw errorKey('errors.maxPlayersReached')
       }
 
       const player = createPlayer(request.nickname, false, request.boundaries ?? [])
@@ -95,7 +96,7 @@ export function createLocalGameSessionApi(): GameSessionApi {
   function start(sessionResource: GameSessionResource): Promise<GameSessionResource> {
     return withSession(sessionResource.id, (session) => {
       if (session.players.length < session.settings.minPlayers) {
-        throw new Error('At least two adult-confirmed players are required.')
+        throw errorKey('errors.startNeedsTwoPlayers')
       }
 
       session.status = 'in_progress'
@@ -114,24 +115,24 @@ export function createLocalGameSessionApi(): GameSessionApi {
     return withSession(sessionResource.id, (session) => {
       assertInProgress(session)
       if (session.currentCard) {
-        throw new Error('Resolve the current card before playing another.')
+        throw errorKey('errors.resolveCurrentCardFirst')
       }
       if (session.currentTurnPlayerId !== request.playerId) {
-        throw new Error('Only the current turn player can play a card.')
+        throw errorKey('errors.onlyCurrentTurnPlayerCanPlay')
       }
 
       const playerIndex = session.players.findIndex((player) => player.id === request.playerId)
       const player = session.players[playerIndex]
 
       if (!player) {
-        throw new Error('The selected player is not in this session.')
+        throw errorKey('errors.playerNotInSession')
       }
 
       const cardIndex = player.hand.findIndex((card) => card.instanceId === request.cardInstanceId)
       const cardInstance = player.hand[cardIndex]
 
       if (!cardInstance) {
-        throw new Error('That card is not in the current player hand.')
+        throw errorKey('errors.cardNotInHand')
       }
 
       validateCardPlay(session, cardInstance.card, request)
@@ -189,7 +190,7 @@ export function createLocalGameSessionApi(): GameSessionApi {
     const session = sessions.get(sessionResource.id)
 
     if (!session || session.status !== 'in_progress') {
-      return reject('A die can only be rolled during an active session.')
+      return rejectKey('errors.dieNeedsActiveSession')
     }
 
     return Promise.resolve({
@@ -232,14 +233,14 @@ export function createLocalGameSessionApi(): GameSessionApi {
     const session = sessions.get(sessionId)
 
     if (!session) {
-      return reject('The session could not be found.')
+      return rejectKey('errors.sessionNotFound')
     }
 
     try {
       update(session)
       return resolveWithLinks(session)
     } catch (error: unknown) {
-      return reject(error instanceof Error ? error.message : 'The session action failed.')
+      return error instanceof Error ? reject(error.message) : rejectKey('errors.sessionActionFailed')
     }
   }
 
@@ -305,22 +306,22 @@ function cardAllowedForSession(session: MutableSession, card: CardResource): boo
 
 function validateCardPlay(session: MutableSession, card: CardResource, request: PlayCardRequest) {
   if (card.target === 'chosen_player' && !request.targetPlayerId) {
-    throw new Error('Choose a willing target player for this card.')
+    throw errorKey('errors.chooseWillingTarget')
   }
   if (card.requiresProps && !session.settings.allowProps) {
-    throw new Error('This session does not allow prop cards.')
+    throw errorKey('errors.propsNotAllowed')
   }
 
   const target = session.players.find((player) => player.id === request.targetPlayerId)
 
   if (target && card.boundaries.some((boundary) => target.comfortProfile.boundaries.includes(boundary))) {
-    throw new Error('That card conflicts with the selected player boundaries.')
+    throw errorKey('errors.cardConflictsWithBoundaries')
   }
 }
 
 function assertInProgress(session: MutableSession) {
   if (session.status !== 'in_progress') {
-    throw new Error('This action needs an active session.')
+    throw errorKey('errors.actionNeedsActiveSession')
   }
 }
 
@@ -328,10 +329,10 @@ function assertResolvable(session: MutableSession, playerId: string) {
   assertInProgress(session)
 
   if (!session.currentCard) {
-    throw new Error('There is no current card to resolve.')
+    throw errorKey('errors.noCurrentCardToResolve')
   }
   if (session.currentCard.playerId !== playerId) {
-    throw new Error('Only the player who played the card can resolve it.')
+    throw errorKey('errors.onlyCardOwnerCanResolve')
   }
 }
 
@@ -365,6 +366,14 @@ function resolveWithLinks(session: MutableSession): Promise<GameSessionResource>
 
 function reject<T>(message: string): Promise<T> {
   return Promise.reject(new Error(message))
+}
+
+function rejectKey<T>(key: string): Promise<T> {
+  return reject(i18n.t(key))
+}
+
+function errorKey(key: string): Error {
+  return new Error(i18n.t(key))
 }
 
 function withLinks(session: MutableSession): GameSessionResource {

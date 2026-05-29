@@ -1,3 +1,5 @@
+import i18n from '../i18n/i18n'
+
 export type ApiLink = {
   href: string
   templated?: boolean
@@ -29,7 +31,7 @@ export function requireLinkHref(resource: HalResource, rel: string, variables?: 
   const href = linkHref(resource, rel, variables)
 
   if (!href) {
-    throw new Error(`The '${rel}' action is not available for this session state.`)
+    throw new Error(i18n.t('errors.linkUnavailable', { rel }))
   }
 
   return href

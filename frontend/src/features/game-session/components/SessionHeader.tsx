@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import type { GameSession } from '../model/gameSession'
 import type { DataSource } from '../hooks/useGameSessionController'
 
@@ -8,17 +9,19 @@ type SessionHeaderProps = {
 }
 
 export function SessionHeader({ source, onSourceChange, session }: SessionHeaderProps) {
+  const { t } = useTranslation()
+
   return (
     <header className="topbar">
       <div className="brand-lockup">
         <img alt="" className="brand-mark" src="/icon.svg" />
         <div>
-          <p className="eyebrow">Afterglow</p>
-          <h1>{session?.status === 'finished' ? 'Results' : 'One-device session'}</h1>
+          <p className="eyebrow">{t('header.brand')}</p>
+          <h1>{session?.status === 'finished' ? t('header.results') : t('header.oneDeviceSession')}</h1>
         </div>
       </div>
 
-      <div className="source-switch" role="radiogroup" aria-label="Data source">
+      <div className="source-switch" role="radiogroup" aria-label={t('header.dataSource')}>
         <button
           aria-checked={source === 'mock'}
           className={source === 'mock' ? 'source-switch__option is-active' : 'source-switch__option'}
@@ -26,7 +29,7 @@ export function SessionHeader({ source, onSourceChange, session }: SessionHeader
           type="button"
           onClick={() => onSourceChange('mock')}
         >
-          Local
+          {t('common.local')}
         </button>
         <button
           aria-checked={source === 'api'}
@@ -35,7 +38,7 @@ export function SessionHeader({ source, onSourceChange, session }: SessionHeader
           type="button"
           onClick={() => onSourceChange('api')}
         >
-          API
+          {t('common.api')}
         </button>
       </div>
     </header>

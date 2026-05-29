@@ -1,12 +1,6 @@
 import { useMemo, useState } from 'react'
-import {
-  boundaryOptions,
-  cardTypeLabels,
-  spiceLabels,
-  targetLabels,
-  type CardInstance,
-  type GameSession,
-} from '../../game-session/model/gameSession'
+import { useTranslation } from 'react-i18next'
+import type { CardInstance, GameSession } from '../../game-session/model/gameSession'
 import {
   cardNeedsTarget,
   currentPlayer,
@@ -41,6 +35,7 @@ export function GameplayView({
   onRollDie,
   onFinish,
 }: GameplayViewProps) {
+  const { t } = useTranslation()
   const player = currentPlayer(session)
   const [targetsByCard, setTargetsByCard] = useState<Record<string, string>>({})
   const [selectionError, setSelectionError] = useState<string | null>(null)
@@ -50,7 +45,7 @@ export function GameplayView({
     return (
       <section className="screen">
         <div className="flow-panel">
-          <h2>Waiting for turn order.</h2>
+          <h2>{t('gameplay.waitingForTurnOrder')}</h2>
         </div>
       </section>
     )
@@ -60,7 +55,7 @@ export function GameplayView({
     const targetPlayerId = targetsByCard[cardInstance.instanceId]
 
     if (cardNeedsTarget(cardInstance.card) && !targetPlayerId) {
-      setSelectionError('Choose a target before playing that card.')
+      setSelectionError(t('gameplay.chooseTargetBeforePlaying'))
       return
     }
 
@@ -78,27 +73,32 @@ export function GameplayView({
 
         <div className="play-layout">
           <section className="current-card-panel">
-            <p className="eyebrow">Current card</p>
+            <p className="eyebrow">{t('gameplay.currentCard')}</p>
             <h2 id="resolution-title">{session.currentCard.card.title}</h2>
             <p className="card-text">{session.currentCard.card.text}</p>
 
             <div className="meta-grid">
-              <span>{cardTypeLabels[session.currentCard.card.type]}</span>
-              <span>{spiceLabels[session.currentCard.card.spiceLevel]}</span>
-              <span>{targetLabels[session.currentCard.card.target]}</span>
-              <span>{session.currentCard.card.actionPointCost} AP</span>
+              <span>{t(`game.cardType.${session.currentCard.card.type}`)}</span>
+              <span>{t(`game.spice.${session.currentCard.card.spiceLevel}`)}</span>
+              <span>{t(`game.target.${session.currentCard.card.target}`)}</span>
+              <span>{t('gameplay.ap', { count: session.currentCard.card.actionPointCost })}</span>
             </div>
 
             <p className="resolution-line">
-              {owner?.nickname ?? 'Player'} {target ? `chose ${target.nickname}` : 'is resolving the card'}.
+              {t('gameplay.resolutionLine', {
+                owner: owner?.nickname ?? t('gameplay.playerFallback'),
+                resolution: target
+                  ? t('gameplay.resolutionWithTarget', { target: target.nickname })
+                  : t('gameplay.isResolvingCard'),
+              })}
             </p>
 
             <div className="action-row">
               <button className="primary-action" disabled={busy} type="button" onClick={onCompleteCurrentCard}>
-                Complete
+                {t('gameplay.complete')}
               </button>
               <button className="refuse-action" disabled={busy} type="button" onClick={onRefuseCurrentCard}>
-                Refuse
+                {t('gameplay.refuse')}
               </button>
             </div>
           </section>
@@ -115,11 +115,11 @@ export function GameplayView({
         <GameStatusPanel session={session} lastRoll={lastRoll} onRollDie={onRollDie} onFinish={onFinish} />
 
         <div className="privacy-panel">
-          <p className="eyebrow">Next turn</p>
-          <h2 id="privacy-title">Pass to {player.nickname}.</h2>
-          <p>Only the active player hand will be shown.</p>
+          <p className="eyebrow">{t('gameplay.nextTurn')}</p>
+          <h2 id="privacy-title">{t('gameplay.passToPlayer', { name: player.nickname })}</h2>
+          <p>{t('gameplay.onlyActivePlayerHandShown')}</p>
           <button className="primary-action" disabled={busy} type="button" onClick={onRevealHand}>
-            Reveal hand
+            {t('gameplay.revealHand')}
           </button>
         </div>
       </section>
@@ -133,7 +133,7 @@ export function GameplayView({
       <div className="play-layout">
         <section aria-labelledby="gameplay-title">
           <div className="panel-heading">
-            <p className="eyebrow">Current player</p>
+            <p className="eyebrow">{t('gameplay.currentPlayer')}</p>
             <h2 id="gameplay-title">{player.nickname}</h2>
           </div>
 
@@ -156,22 +156,22 @@ export function GameplayView({
                   </div>
                   <div className="game-card__body">
                     <div>
-                      <p className="eyebrow">{cardTypeLabels[cardInstance.card.type]}</p>
+                      <p className="eyebrow">{t(`game.cardType.${cardInstance.card.type}`)}</p>
                       <h3>{cardInstance.card.title}</h3>
                     </div>
                     <p className="card-text">{cardInstance.card.text}</p>
 
                     <div className="meta-grid">
-                      <span>{spiceLabels[cardInstance.card.spiceLevel]}</span>
-                      <span>{targetLabels[cardInstance.card.target]}</span>
-                      {cardInstance.card.requiresProps ? <span>Props</span> : null}
+                      <span>{t(`game.spice.${cardInstance.card.spiceLevel}`)}</span>
+                      <span>{t(`game.target.${cardInstance.card.target}`)}</span>
+                      {cardInstance.card.requiresProps ? <span>{t('setup.allowProps')}</span> : null}
                     </div>
 
                     {cardInstance.card.boundaries.length > 0 ? (
                       <div className="chip-row">
                         {cardInstance.card.boundaries.map((boundary) => (
                           <span className="chip" key={boundary}>
-                            {boundaryOptions.find((option) => option.value === boundary)?.label ?? boundary}
+                            {t(`game.boundary.${boundary}`)}
                           </span>
                         ))}
                       </div>
@@ -179,7 +179,7 @@ export function GameplayView({
 
                     {needsTarget ? (
                       <label className="field">
-                        <span>Target</span>
+                        <span>{t('gameplay.target')}</span>
                         <select
                           value={targetsByCard[cardInstance.instanceId] ?? ''}
                           onChange={(event) =>
@@ -189,7 +189,7 @@ export function GameplayView({
                             }))
                           }
                         >
-                          <option value="">Choose player</option>
+                          <option value="">{t('gameplay.choosePlayer')}</option>
                           {eligibleTargets.map((target) => (
                             <option key={target.id} value={target.id}>
                               {target.nickname}
@@ -205,7 +205,7 @@ export function GameplayView({
                       type="button"
                       onClick={() => play(cardInstance)}
                     >
-                      Play card
+                      {t('gameplay.playCard')}
                     </button>
                   </div>
                 </article>
@@ -228,29 +228,31 @@ type GameStatusPanelProps = {
 }
 
 function GameStatusPanel({ session, lastRoll, onRollDie, onFinish }: GameStatusPanelProps) {
+  const { t } = useTranslation()
+
   return (
-    <section className="status-strip" aria-label="Session status">
+    <section className="status-strip" aria-label={t('gameplay.sessionStatus')}>
       <div>
-        <span>Round</span>
+        <span>{t('gameplay.round')}</span>
         <strong>{session.currentRound}</strong>
       </div>
       <div>
-        <span>Atmosphere</span>
+        <span>{t('gameplay.atmosphere')}</span>
         <strong>{session.atmosphereLevel}/5</strong>
       </div>
       <div>
-        <span>Spice</span>
-        <strong>{spiceLabels[session.currentSpiceLevel]}</strong>
+        <span>{t('gameplay.spice')}</span>
+        <strong>{t(`game.spice.${session.currentSpiceLevel}`)}</strong>
       </div>
       <div>
-        <span>Die</span>
+        <span>{t('gameplay.die')}</span>
         <strong>{lastRoll ? lastRoll.value : '-'}</strong>
       </div>
       <button className="quiet-action" type="button" onClick={onRollDie}>
-        Roll die
+        {t('gameplay.rollDie')}
       </button>
       <button className="quiet-action" type="button" onClick={onFinish}>
-        Finish
+        {t('gameplay.finish')}
       </button>
     </section>
   )
@@ -261,10 +263,12 @@ type ScorePanelProps = {
 }
 
 function ScorePanel({ rows }: ScorePanelProps) {
+  const { t } = useTranslation()
+
   return (
     <aside className="score-panel" aria-labelledby="score-title">
-      <p className="eyebrow">Score</p>
-      <h3 id="score-title">Table</h3>
+      <p className="eyebrow">{t('gameplay.score')}</p>
+      <h3 id="score-title">{t('gameplay.table')}</h3>
       <ol>
         {rows.map(({ player, points }) => (
           <li key={player.id}>

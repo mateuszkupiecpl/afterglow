@@ -1,4 +1,5 @@
 import axios from 'axios'
+import i18n from '../i18n/i18n'
 
 type ApiErrorBody = {
   error?: string
@@ -12,5 +13,5 @@ export function normalizeApiError(error: unknown): Error {
     return new Error(message)
   }
 
-  return error instanceof Error ? error : new Error('The API request failed.')
+  return error instanceof Error ? error : new Error(i18n.t('api.errors.requestFailed'))
 }

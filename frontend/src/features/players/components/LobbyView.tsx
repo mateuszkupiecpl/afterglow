@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { BoundaryPicker } from '../../settings/components/BoundaryPicker'
-import { boundaryOptions, type GameSession } from '../../game-session/model/gameSession'
+import type { GameSession } from '../../game-session/model/gameSession'
 import { canStartSession } from '../../game-flow/model/gameplaySelectors'
 import type { AddPlayerForm } from '../model/addPlayerForm'
 
@@ -12,6 +13,7 @@ type LobbyViewProps = {
 }
 
 export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProps) {
+  const { t } = useTranslation()
   const [form, setForm] = useState<AddPlayerForm>({
     nickname: '',
     confirmedAdult: false,
@@ -31,18 +33,16 @@ export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProp
   return (
     <section className="screen lobby-screen" aria-labelledby="lobby-title">
       <div className="session-code-panel">
-        <p className="eyebrow">Session code</p>
+        <p className="eyebrow">{t('lobby.sessionCode')}</p>
         <h2 id="lobby-title">{session.code}</h2>
-        <p>
-          {session.players.length}/{session.settings.maxPlayers} players
-        </p>
+        <p>{t('lobby.playerCount', { current: session.players.length, max: session.settings.maxPlayers })}</p>
       </div>
 
       <div className="lobby-layout">
         <section className="flow-panel" aria-labelledby="players-title">
           <div className="panel-heading">
-            <p className="eyebrow">Setup</p>
-            <h3 id="players-title">Players</h3>
+            <p className="eyebrow">{t('lobby.setup')}</p>
+            <h3 id="players-title">{t('lobby.players')}</h3>
           </div>
 
           <ul className="player-list">
@@ -50,15 +50,15 @@ export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProp
               <li className="player-row" key={player.id}>
                 <div>
                   <strong>{player.nickname}</strong>
-                  <span>{player.host ? 'Host' : 'Player'}</span>
+                  <span>{player.host ? t('lobby.host') : t('common.player')}</span>
                 </div>
                 <div className="chip-row">
                   {player.comfortProfile.boundaries.length === 0 ? (
-                    <span className="chip chip--quiet">Open within room limits</span>
+                    <span className="chip chip--quiet">{t('lobby.openWithinRoomLimits')}</span>
                   ) : (
                     player.comfortProfile.boundaries.map((boundary) => (
                       <span className="chip" key={boundary}>
-                        {boundaryOptions.find((option) => option.value === boundary)?.label ?? boundary}
+                        {t(`game.boundary.${boundary}`)}
                       </span>
                     ))
                   )}
@@ -68,18 +68,18 @@ export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProp
           </ul>
 
           <button className="primary-action" disabled={!canStart} type="button" onClick={onStart}>
-            Start game
+            {t('lobby.startGame')}
           </button>
         </section>
 
         <form className="flow-panel" onSubmit={submit}>
           <div className="panel-heading">
-            <p className="eyebrow">Add player</p>
-            <h3>Consent first</h3>
+            <p className="eyebrow">{t('lobby.addPlayer')}</p>
+            <h3>{t('lobby.consentFirst')}</h3>
           </div>
 
           <label className="field">
-            <span>Nickname</span>
+            <span>{t('lobby.nickname')}</span>
             <input
               autoComplete="off"
               maxLength={40}
@@ -96,7 +96,7 @@ export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProp
               checked={form.confirmedAdult}
               onChange={(event) => setForm((current) => ({ ...current, confirmedAdult: event.target.checked }))}
             />
-            <span>This player confirms 18+ and consents to play.</span>
+            <span>{t('lobby.confirmAdult')}</span>
           </label>
 
           <BoundaryPicker
@@ -106,7 +106,7 @@ export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProp
           />
 
           <button className="secondary-action" disabled={!canAddPlayer} type="submit">
-            Add player
+            {t('lobby.addPlayer')}
           </button>
         </form>
       </div>

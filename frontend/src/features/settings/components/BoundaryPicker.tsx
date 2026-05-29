@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { boundaryOptions, type BoundaryCode } from '../../game-session/model/gameSession'
 
 type BoundaryPickerProps = {
@@ -7,6 +8,8 @@ type BoundaryPickerProps = {
 }
 
 export function BoundaryPicker({ selected, onChange, compact = false }: BoundaryPickerProps) {
+  const { t } = useTranslation()
+
   function toggle(boundary: BoundaryCode) {
     if (selected.includes(boundary)) {
       onChange(selected.filter((current) => current !== boundary))
@@ -18,7 +21,7 @@ export function BoundaryPicker({ selected, onChange, compact = false }: Boundary
 
   return (
     <fieldset className={compact ? 'boundary-grid boundary-grid--compact' : 'boundary-grid'}>
-      <legend>Boundaries</legend>
+      <legend>{t('boundaries.title')}</legend>
       {boundaryOptions.map((option) => (
         <label className="boundary-choice" key={option.value}>
           <input
@@ -26,7 +29,7 @@ export function BoundaryPicker({ selected, onChange, compact = false }: Boundary
             checked={selected.includes(option.value)}
             onChange={() => toggle(option.value)}
           />
-          <span>{option.label}</span>
+          <span>{t(`game.boundary.${option.value}`)}</span>
         </label>
       ))}
     </fieldset>

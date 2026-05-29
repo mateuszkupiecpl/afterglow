@@ -12,73 +12,40 @@ export type { BoundaryCode, CardTarget, CardType, GameMode, GameStatus, PaceCode
 
 export type Option<T extends string> = {
   value: T
-  label: string
-  note?: string
 }
 
 export const modeOptions: Option<GameMode>[] = [
-  { value: 'party_warmup', label: 'Party warmup', note: 'Light and social' },
-  { value: 'night_of_tension', label: 'Night of tension', note: 'Slower escalation' },
-  { value: 'slow_burn', label: 'Slow burn', note: 'More pauses' },
-  { value: 'fantasy_finale', label: 'Fantasy finale', note: 'Highest ceiling' },
-  { value: 'custom', label: 'Custom', note: 'Manual settings' },
+  { value: 'party_warmup' },
+  { value: 'night_of_tension' },
+  { value: 'slow_burn' },
+  { value: 'fantasy_finale' },
+  { value: 'custom' },
 ]
 
 export const spiceOptions: Option<SpiceLevel>[] = [
-  { value: 'warmup', label: 'Warmup' },
-  { value: 'tension', label: 'Tension' },
-  { value: 'courage', label: 'Courage' },
-  { value: 'spicy', label: 'Spicy' },
-  { value: 'finale', label: 'Finale' },
+  { value: 'warmup' },
+  { value: 'tension' },
+  { value: 'courage' },
+  { value: 'spicy' },
+  { value: 'finale' },
 ]
 
 export const paceOptions: Option<PaceCode>[] = [
-  { value: 'fast', label: 'Fast' },
-  { value: 'standard', label: 'Standard' },
-  { value: 'chill', label: 'Chill' },
+  { value: 'fast' },
+  { value: 'standard' },
+  { value: 'chill' },
 ]
 
 export const boundaryOptions: Option<BoundaryCode>[] = [
-  { value: 'no_nudity', label: 'No nudity' },
-  { value: 'no_clothing_removal', label: 'No clothing removal' },
-  { value: 'no_touch', label: 'No touch' },
-  { value: 'verbal_only', label: 'Verbal only' },
-  { value: 'no_props', label: 'No props' },
-  { value: 'no_random_partner', label: 'No random partner' },
-  { value: 'partner_only', label: 'Partner only' },
-  { value: 'no_group_physical_tasks', label: 'No group physical tasks' },
+  { value: 'no_nudity' },
+  { value: 'no_clothing_removal' },
+  { value: 'no_touch' },
+  { value: 'verbal_only' },
+  { value: 'no_props' },
+  { value: 'no_random_partner' },
+  { value: 'partner_only' },
+  { value: 'no_group_physical_tasks' },
 ]
-
-export const cardTypeLabels: Record<CardType, string> = {
-  question: 'Question',
-  challenge: 'Challenge',
-  group: 'Group',
-  interlude: 'Interlude',
-  fantasy: 'Fantasy',
-  prop: 'Prop',
-  special: 'Special',
-  reaction: 'Reaction',
-  event: 'Event',
-}
-
-export const targetLabels: Record<CardTarget, string> = {
-  self: 'Self',
-  chosen_player: 'Chosen player',
-  random_player: 'Random player',
-  pair: 'Pair',
-  group: 'Group',
-  everyone: 'Everyone',
-  left_player: 'Left player',
-  right_player: 'Right player',
-}
-
-export const spiceLabels: Record<SpiceLevel, string> = {
-  warmup: 'Warmup',
-  tension: 'Tension',
-  courage: 'Courage',
-  spicy: 'Spicy',
-  finale: 'Finale',
-}
 
 export type GameSettings = {
   minPlayers: number

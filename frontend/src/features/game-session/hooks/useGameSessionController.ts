@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { DiceRollResource, GameSessionResource } from '../api/gameSessionResources'
 import { backendGameSessionApi, type GameSessionApi } from '../api/gameSessionApi'
 import { createLocalGameSessionApi } from '../api/localGameSessionApi'
@@ -12,6 +13,7 @@ export type DataSource = 'mock' | 'api'
 const localGameSessionApi = createLocalGameSessionApi()
 
 export function useGameSessionController() {
+  const { t } = useTranslation()
   const [source, setSource] = useState<DataSource>('mock')
   const [sessionResource, setSessionResource] = useState<GameSessionResource | null>(null)
   const [busy, setBusy] = useState(false)
@@ -39,7 +41,7 @@ export function useGameSessionController() {
       setSessionResource(nextSession)
       setHandRevealed(revealNextHand)
     } catch (reason: unknown) {
-      setError(reason instanceof Error ? reason.message : 'The session action failed.')
+      setError(reason instanceof Error ? reason.message : t('errors.sessionActionFailed'))
     } finally {
       setBusy(false)
     }
@@ -148,7 +150,7 @@ export function useGameSessionController() {
       })
       setLastRoll(roll)
     } catch (reason: unknown) {
-      setError(reason instanceof Error ? reason.message : 'The die roll failed.')
+      setError(reason instanceof Error ? reason.message : t('errors.dieRollFailed'))
     } finally {
       setBusy(false)
     }
