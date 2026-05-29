@@ -4,6 +4,7 @@ import type { GameMode, PaceCode, SpiceLevel } from '../../game-session/model/ga
 import { modeOptions, paceOptions, spiceOptions } from '../../game-session/model/gameSession'
 import { BoundaryPicker } from './BoundaryPicker'
 import type { CreateSessionForm } from '../model/createSessionForm'
+import * as React from "react";
 
 type SetupViewProps = {
   busy: boolean
@@ -29,7 +30,7 @@ export function SetupView({ busy, onCreateSession }: SetupViewProps) {
     setForm((current) => ({ ...current, [key]: value }))
   }
 
-  function submit(event: React.FormEvent<HTMLFormElement>) {
+  function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
     onCreateSession({ ...form, hostNickname: form.hostNickname.trim() })
   }

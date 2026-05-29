@@ -4,6 +4,7 @@ import { BoundaryPicker } from '../../settings/components/BoundaryPicker'
 import type { GameSession } from '../../game-session/model/gameSession'
 import { canStartSession } from '../../game-flow/model/gameplaySelectors'
 import type { AddPlayerForm } from '../model/addPlayerForm'
+import * as React from "react";
 
 type LobbyViewProps = {
   session: GameSession
@@ -20,7 +21,7 @@ export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProp
     boundaries: [],
   })
 
-  function submit(event: React.FormEvent<HTMLFormElement>) {
+  function submit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
     onAddPlayer({ ...form, nickname: form.nickname.trim() })
     setForm({ nickname: '', confirmedAdult: false, boundaries: [] })
