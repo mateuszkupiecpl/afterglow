@@ -8,16 +8,16 @@ type ResultsViewProps = {
 }
 
 export function ResultsView({ session, onNewSession }: ResultsViewProps) {
-  const { t } = useTranslation()
+  const { t: translate } = useTranslation()
   const rows = scoreRows(session)
   const winner = rows[0]
 
   return (
     <section className="screen results-screen" aria-labelledby="results-title">
       <div className="result-hero">
-        <p className="eyebrow">{t('results.finalScore')}</p>
-        <h2 id="results-title">{winner ? winner.player.nickname : t('results.sessionComplete')}</h2>
-        <p>{winner ? t('common.points', { count: winner.points }) : t('results.noScores')}</p>
+        <p className="eyebrow">{translate('results.finalScore')}</p>
+        <h2 id="results-title">{winner ? winner.player.nickname : translate('results.sessionComplete')}</h2>
+        <p>{winner ? translate('common.points', { count: winner.points }) : translate('results.noScores')}</p>
       </div>
 
       <div className="flow-panel">
@@ -32,21 +32,21 @@ export function ResultsView({ session, onNewSession }: ResultsViewProps) {
 
         <dl className="summary-grid">
           <div>
-            <dt>{t('results.rounds')}</dt>
+            <dt>{translate('results.rounds')}</dt>
             <dd>{session.currentRound}</dd>
           </div>
           <div>
-            <dt>{t('results.atmosphere')}</dt>
+            <dt>{translate('results.atmosphere')}</dt>
             <dd>{session.atmosphereLevel}/5</dd>
           </div>
           <div>
-            <dt>{t('results.players')}</dt>
+            <dt>{translate('results.players')}</dt>
             <dd>{session.players.length}</dd>
           </div>
         </dl>
 
         <button className="primary-action" type="button" onClick={onNewSession}>
-          {t('results.newSession')}
+          {translate('results.newSession')}
         </button>
       </div>
     </section>

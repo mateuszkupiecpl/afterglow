@@ -8,7 +8,7 @@ type BoundaryPickerProps = {
 }
 
 export function BoundaryPicker({ selected, onChange, compact = false }: BoundaryPickerProps) {
-  const { t } = useTranslation()
+  const { t: translate } = useTranslation()
 
   function toggle(boundary: BoundaryCode) {
     if (selected.includes(boundary)) {
@@ -21,7 +21,7 @@ export function BoundaryPicker({ selected, onChange, compact = false }: Boundary
 
   return (
     <fieldset className={compact ? 'boundary-grid boundary-grid--compact' : 'boundary-grid'}>
-      <legend>{t('boundaries.title')}</legend>
+      <legend>{translate('boundaries.title')}</legend>
       {boundaryOptions.map((option) => (
         <label className="boundary-choice" key={option.value}>
           <input
@@ -29,7 +29,7 @@ export function BoundaryPicker({ selected, onChange, compact = false }: Boundary
             checked={selected.includes(option.value)}
             onChange={() => toggle(option.value)}
           />
-          <span>{t(`game.boundary.${option.value}`)}</span>
+          <span>{translate(`game.boundary.${option.value}`)}</span>
         </label>
       ))}
     </fieldset>

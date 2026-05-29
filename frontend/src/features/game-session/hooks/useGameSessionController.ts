@@ -13,7 +13,7 @@ export type DataSource = 'mock' | 'api'
 const localGameSessionApi = createLocalGameSessionApi()
 
 export function useGameSessionController() {
-  const { t } = useTranslation()
+  const { t: translate } = useTranslation()
   const [source, setSource] = useState<DataSource>('mock')
   const [sessionResource, setSessionResource] = useState<GameSessionResource | null>(null)
   const [busy, setBusy] = useState(false)
@@ -41,7 +41,7 @@ export function useGameSessionController() {
       setSessionResource(nextSession)
       setHandRevealed(revealNextHand)
     } catch (reason: unknown) {
-      setError(reason instanceof Error ? reason.message : t('errors.sessionActionFailed'))
+      setError(reason instanceof Error ? reason.message : translate('errors.sessionActionFailed'))
     } finally {
       setBusy(false)
     }
@@ -150,7 +150,7 @@ export function useGameSessionController() {
       })
       setLastRoll(roll)
     } catch (reason: unknown) {
-      setError(reason instanceof Error ? reason.message : t('errors.dieRollFailed'))
+      setError(reason instanceof Error ? reason.message : translate('errors.dieRollFailed'))
     } finally {
       setBusy(false)
     }

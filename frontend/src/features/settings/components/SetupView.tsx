@@ -12,7 +12,7 @@ type SetupViewProps = {
 }
 
 export function SetupView({ busy, onCreateSession }: SetupViewProps) {
-  const { t } = useTranslation()
+  const { t: translate } = useTranslation()
   const [form, setForm] = useState<CreateSessionForm>({
     hostNickname: '',
     confirmedAdult: false,
@@ -40,14 +40,14 @@ export function SetupView({ busy, onCreateSession }: SetupViewProps) {
   return (
     <section className="screen setup-screen" aria-labelledby="setup-title">
       <div className="screen-copy">
-        <p className="eyebrow">{t('setup.createSession')}</p>
-        <h2 id="setup-title">{t('setup.title')}</h2>
-        <p className="lead-copy">{t('setup.lead')}</p>
+        <p className="eyebrow">{translate('setup.createSession')}</p>
+        <h2 id="setup-title">{translate('setup.title')}</h2>
+        <p className="lead-copy">{translate('setup.lead')}</p>
       </div>
 
       <form className="flow-panel" onSubmit={submit}>
         <label className="field">
-          <span>{t('setup.hostNickname')}</span>
+            <span>{translate('setup.hostNickname')}</span>
           <input
             autoComplete="off"
             maxLength={40}
@@ -64,55 +64,55 @@ export function SetupView({ busy, onCreateSession }: SetupViewProps) {
             checked={form.confirmedAdult}
             onChange={(event) => update('confirmedAdult', event.target.checked)}
           />
-          <span>{t('setup.confirmAdult')}</span>
+          <span>{translate('setup.confirmAdult')}</span>
         </label>
 
         <div className="form-grid">
           <label className="field">
-            <span>{t('setup.mode')}</span>
+            <span>{translate('setup.mode')}</span>
             <select value={form.mode} onChange={(event) => update('mode', event.target.value as GameMode)}>
               {modeOptions.map((option) => (
                 <option key={option.value} value={option.value}>
-                  {t(`game.mode.${option.value}.label`)}
+                  {translate(`game.mode.${option.value}.label`)}
                 </option>
               ))}
             </select>
           </label>
 
           <label className="field">
-            <span>{t('setup.pace')}</span>
+            <span>{translate('setup.pace')}</span>
             <select value={form.pace} onChange={(event) => update('pace', event.target.value as PaceCode)}>
               {paceOptions.map((option) => (
                 <option key={option.value} value={option.value}>
-                  {t(`game.pace.${option.value}`)}
+                  {translate(`game.pace.${option.value}`)}
                 </option>
               ))}
             </select>
           </label>
 
           <label className="field">
-            <span>{t('setup.startSpice')}</span>
+            <span>{translate('setup.startSpice')}</span>
             <select
               value={form.startSpiceLevel}
               onChange={(event) => update('startSpiceLevel', event.target.value as SpiceLevel)}
             >
               {spiceOptions.map((option) => (
                 <option key={option.value} value={option.value}>
-                  {t(`game.spice.${option.value}`)}
+                  {translate(`game.spice.${option.value}`)}
                 </option>
               ))}
             </select>
           </label>
 
           <label className="field">
-            <span>{t('setup.maxSpice')}</span>
+            <span>{translate('setup.maxSpice')}</span>
             <select
               value={form.maxSpiceLevel}
               onChange={(event) => update('maxSpiceLevel', event.target.value as SpiceLevel)}
             >
               {spiceOptions.map((option) => (
                 <option key={option.value} value={option.value}>
-                  {t(`game.spice.${option.value}`)}
+                  {translate(`game.spice.${option.value}`)}
                 </option>
               ))}
             </select>
@@ -126,7 +126,7 @@ export function SetupView({ busy, onCreateSession }: SetupViewProps) {
               checked={form.allowProps}
               onChange={(event) => update('allowProps', event.target.checked)}
             />
-            <span>{t('setup.allowProps')}</span>
+            <span>{translate('setup.allowProps')}</span>
           </label>
           <label>
             <input
@@ -134,7 +134,7 @@ export function SetupView({ busy, onCreateSession }: SetupViewProps) {
               checked={form.allowPairTasks}
               onChange={(event) => update('allowPairTasks', event.target.checked)}
             />
-            <span>{t('setup.allowPairTasks')}</span>
+            <span>{translate('setup.allowPairTasks')}</span>
           </label>
           <label>
             <input
@@ -142,14 +142,14 @@ export function SetupView({ busy, onCreateSession }: SetupViewProps) {
               checked={form.allowGroupTasks}
               onChange={(event) => update('allowGroupTasks', event.target.checked)}
             />
-            <span>{t('setup.allowGroupTasks')}</span>
+            <span>{translate('setup.allowGroupTasks')}</span>
           </label>
         </div>
 
         <BoundaryPicker selected={form.boundaries} onChange={(boundaries) => update('boundaries', boundaries)} />
 
         <button className="primary-action" disabled={!canSubmit} type="submit">
-          {t('setup.createSession')}
+          {translate('setup.createSession')}
         </button>
       </form>
     </section>

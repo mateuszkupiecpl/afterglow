@@ -14,7 +14,7 @@ type LobbyViewProps = {
 }
 
 export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProps) {
-  const { t } = useTranslation()
+  const { t: translate } = useTranslation()
   const [form, setForm] = useState<AddPlayerForm>({
     nickname: '',
     confirmedAdult: false,
@@ -34,16 +34,16 @@ export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProp
   return (
     <section className="screen lobby-screen" aria-labelledby="lobby-title">
       <div className="session-code-panel">
-        <p className="eyebrow">{t('lobby.sessionCode')}</p>
+        <p className="eyebrow">{translate('lobby.sessionCode')}</p>
         <h2 id="lobby-title">{session.code}</h2>
-        <p>{t('lobby.playerCount', { current: session.players.length, max: session.settings.maxPlayers })}</p>
+        <p>{translate('lobby.playerCount', { current: session.players.length, max: session.settings.maxPlayers })}</p>
       </div>
 
       <div className="lobby-layout">
         <section className="flow-panel" aria-labelledby="players-title">
           <div className="panel-heading">
-            <p className="eyebrow">{t('lobby.setup')}</p>
-            <h3 id="players-title">{t('lobby.players')}</h3>
+            <p className="eyebrow">{translate('lobby.setup')}</p>
+            <h3 id="players-title">{translate('lobby.players')}</h3>
           </div>
 
           <ul className="player-list">
@@ -51,15 +51,15 @@ export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProp
               <li className="player-row" key={player.id}>
                 <div>
                   <strong>{player.nickname}</strong>
-                  <span>{player.host ? t('lobby.host') : t('common.player')}</span>
+                  <span>{player.host ? translate('lobby.host') : translate('common.player')}</span>
                 </div>
                 <div className="chip-row">
                   {player.comfortProfile.boundaries.length === 0 ? (
-                    <span className="chip chip--quiet">{t('lobby.openWithinRoomLimits')}</span>
+                    <span className="chip chip--quiet">{translate('lobby.openWithinRoomLimits')}</span>
                   ) : (
                     player.comfortProfile.boundaries.map((boundary) => (
                       <span className="chip" key={boundary}>
-                        {t(`game.boundary.${boundary}`)}
+                        {translate(`game.boundary.${boundary}`)}
                       </span>
                     ))
                   )}
@@ -69,18 +69,18 @@ export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProp
           </ul>
 
           <button className="primary-action" disabled={!canStart} type="button" onClick={onStart}>
-            {t('lobby.startGame')}
+            {translate('lobby.startGame')}
           </button>
         </section>
 
         <form className="flow-panel" onSubmit={submit}>
           <div className="panel-heading">
-            <p className="eyebrow">{t('lobby.addPlayer')}</p>
-            <h3>{t('lobby.consentFirst')}</h3>
+            <p className="eyebrow">{translate('lobby.addPlayer')}</p>
+            <h3>{translate('lobby.consentFirst')}</h3>
           </div>
 
           <label className="field">
-            <span>{t('lobby.nickname')}</span>
+            <span>{translate('lobby.nickname')}</span>
             <input
               autoComplete="off"
               maxLength={40}
@@ -97,7 +97,7 @@ export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProp
               checked={form.confirmedAdult}
               onChange={(event) => setForm((current) => ({ ...current, confirmedAdult: event.target.checked }))}
             />
-            <span>{t('lobby.confirmAdult')}</span>
+            <span>{translate('lobby.confirmAdult')}</span>
           </label>
 
           <BoundaryPicker
@@ -107,7 +107,7 @@ export function LobbyView({ session, busy, onAddPlayer, onStart }: LobbyViewProp
           />
 
           <button className="secondary-action" disabled={!canAddPlayer} type="submit">
-            {t('lobby.addPlayer')}
+            {translate('lobby.addPlayer')}
           </button>
         </form>
       </div>

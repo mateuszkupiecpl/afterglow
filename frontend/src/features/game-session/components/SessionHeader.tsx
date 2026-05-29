@@ -9,19 +9,19 @@ type SessionHeaderProps = {
 }
 
 export function SessionHeader({ source, onSourceChange, session }: SessionHeaderProps) {
-  const { t } = useTranslation()
+  const { t: translate } = useTranslation()
 
   return (
     <header className="topbar">
       <div className="brand-lockup">
         <img alt="" className="brand-mark" src="/icon.svg" />
         <div>
-          <p className="eyebrow">{t('header.brand')}</p>
-          <h1>{session?.status === 'finished' ? t('header.results') : t('header.oneDeviceSession')}</h1>
+          <p className="eyebrow">{translate('header.brand')}</p>
+          <h1>{session?.status === 'finished' ? translate('header.results') : translate('header.oneDeviceSession')}</h1>
         </div>
       </div>
 
-      <div className="source-switch" role="radiogroup" aria-label={t('header.dataSource')}>
+      <div className="source-switch" role="radiogroup" aria-label={translate('header.dataSource')}>
         <button
           aria-checked={source === 'mock'}
           className={source === 'mock' ? 'source-switch__option is-active' : 'source-switch__option'}
@@ -29,7 +29,7 @@ export function SessionHeader({ source, onSourceChange, session }: SessionHeader
           type="button"
           onClick={() => onSourceChange('mock')}
         >
-          {t('common.local')}
+          {translate('common.local')}
         </button>
         <button
           aria-checked={source === 'api'}
@@ -38,7 +38,7 @@ export function SessionHeader({ source, onSourceChange, session }: SessionHeader
           type="button"
           onClick={() => onSourceChange('api')}
         >
-          {t('common.api')}
+          {translate('common.api')}
         </button>
       </div>
     </header>
