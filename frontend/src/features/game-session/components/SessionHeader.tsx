@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import type { GameSession } from '../model/gameSession'
+import './SessionHeader.css'
 
 type SessionHeaderProps = {
   session: GameSession | null

@@ -1,0 +1,198 @@
+.play-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.status-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(6rem, 0.8fr) minmax(6rem, 0.8fr);
+  gap: 1px;
+  overflow: hidden;
+  background: rgba(248, 243, 238, 0.12);
+}
+
+.status-strip > div,
+.status-strip button {
+  border: 0;
+  border-radius: 0;
+  background: rgba(24, 21, 22, 0.95);
+}
+
+.status-strip > div {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.8rem;
+}
+
+.status-strip span {
+  color: rgba(248, 243, 238, 0.54);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.status-strip strong {
+  overflow-wrap: anywhere;
+}
+
+.privacy-panel {
+  display: grid;
+  gap: 1rem;
+  min-height: 23rem;
+  align-content: center;
+  text-align: center;
+}
+
+.privacy-panel p:not(.eyebrow) {
+  color: rgba(248, 243, 238, 0.68);
+}
+
+.hand-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.game-card {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  min-height: 18rem;
+  overflow: hidden;
+  border: 1px solid rgba(248, 243, 238, 0.16);
+  border-radius: 8px;
+  background: rgba(248, 243, 238, 0.07);
+}
+
+.game-card__art {
+  display: grid;
+  place-items: start center;
+  padding-top: 1rem;
+  background:
+    linear-gradient(180deg, rgba(240, 195, 106, 0.9), rgba(132, 45, 59, 0.72)),
+    #f0c36a;
+}
+
+.game-card__art span {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  color: #171313;
+  background: rgba(248, 243, 238, 0.92);
+  font-weight: 900;
+}
+
+.game-card__body {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.card-text {
+  color: rgba(248, 243, 238, 0.76);
+  line-height: 1.55;
+}
+
+.meta-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.meta-grid span {
+  border: 1px solid rgba(248, 243, 238, 0.14);
+  border-radius: 999px;
+  padding: 0.28rem 0.52rem;
+  color: rgba(248, 243, 238, 0.74);
+  background: rgba(248, 243, 238, 0.05);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.current-card-panel {
+  display: grid;
+  gap: 1rem;
+  min-height: 26rem;
+  align-content: center;
+}
+
+.resolution-line {
+  color: rgba(248, 243, 238, 0.72);
+  font-weight: 800;
+}
+
+.action-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.score-panel {
+  display: grid;
+  gap: 0.85rem;
+  position: sticky;
+  top: 1rem;
+}
+
+.score-panel ol {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.score-panel li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid rgba(248, 243, 238, 0.1);
+  padding-top: 0.75rem;
+}
+
+.score-panel li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.score-panel strong {
+  color: #f0c36a;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 920px) {
+  .play-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .score-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 680px) {
+  .hand-grid,
+  .action-row {
+    grid-template-columns: 1fr;
+  }
+
+  .status-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .game-card {
+    grid-template-columns: 1fr;
+  }
+
+  .game-card__art {
+    min-height: 4rem;
+    place-items: center start;
+    padding: 0.85rem 1rem;
+  }
+}

@@ -1,0 +1,47 @@
+.boundary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.boundary-grid legend {
+  grid-column: 1 / -1;
+  margin-bottom: 0.1rem;
+  color: rgba(248, 243, 238, 0.74);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.boundary-grid--compact {
+  grid-template-columns: 1fr;
+}
+
+.boundary-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 2.75rem;
+  border: 1px solid rgba(248, 243, 238, 0.14);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  background: rgba(248, 243, 238, 0.05);
+  color: rgba(248, 243, 238, 0.84);
+  font-weight: 700;
+}
+
+.boundary-choice input {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: 0 0 auto;
+  accent-color: #f0c36a;
+}
+
+@media (max-width: 680px) {
+  .boundary-grid {
+    grid-template-columns: 1fr;
+  }
+}

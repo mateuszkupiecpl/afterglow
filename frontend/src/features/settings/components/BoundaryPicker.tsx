@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { boundaryOptions, type BoundaryCode } from '../../game-session/model/gameSession'
+import './BoundaryPicker.css'
 
 type BoundaryPickerProps = {
   selected: BoundaryCode[]

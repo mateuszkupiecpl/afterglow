@@ -9,6 +9,7 @@ import {
   scoreRows,
 } from '../model/gameplaySelectors'
 import type { DiceRollResource } from '../../game-session/api/gameSessionResources'
+import './GameplayView.css'
 
 type GameplayViewProps = {
   session: GameSession

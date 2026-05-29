@@ -4,6 +4,7 @@ import { SessionHeader } from '../features/game-session/components/SessionHeader
 import { useGameSessionController } from '../features/game-session/hooks/useGameSessionController'
 import { LobbyView } from '../features/players/components/LobbyView'
 import { SetupView } from '../features/settings/components/SetupView'
+import './SessionPage.css'
 
 export function SessionPage() {
   const gameSession = useGameSessionController()

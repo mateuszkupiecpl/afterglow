@@ -1,0 +1,196 @@
+.app-shell {
+  width: 100%;
+  max-width: 1180px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: clamp(1rem, 4vw, 2rem);
+  overflow-x: hidden;
+}
+
+.screen {
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.5rem);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.flow-panel,
+.current-card-panel,
+.privacy-panel,
+.score-panel,
+.session-code-panel,
+.result-hero,
+.status-strip {
+  border: 1px solid rgba(248, 243, 238, 0.14);
+  border-radius: 8px;
+  background: rgba(24, 21, 22, 0.88);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.24);
+}
+
+.flow-panel,
+.current-card-panel,
+.privacy-panel,
+.score-panel,
+.session-code-panel,
+.result-hero {
+  min-width: 0;
+  padding: clamp(1rem, 4vw, 1.5rem);
+}
+
+.flow-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.panel-heading {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.eyebrow {
+  color: #9bd4c7;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.field span {
+  color: rgba(248, 243, 238, 0.74);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  min-height: 2.9rem;
+  border: 1px solid rgba(248, 243, 238, 0.18);
+  color: #f8f3ee;
+  background: rgba(248, 243, 238, 0.07);
+  padding: 0.7rem 0.8rem;
+}
+
+.field option {
+  color: #171313;
+}
+
+.confirm-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: rgba(248, 243, 238, 0.78);
+  line-height: 1.45;
+}
+
+.confirm-row input {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: 0 0 auto;
+  accent-color: #f0c36a;
+}
+
+.primary-action,
+.secondary-action,
+.refuse-action,
+.quiet-action {
+  width: 100%;
+  padding: 0.75rem 1rem;
+}
+
+.primary-action {
+  color: #171313;
+  background: #f0c36a;
+}
+
+.primary-action:hover:not(:disabled) {
+  background: #f4d184;
+}
+
+.secondary-action {
+  color: #f8f3ee;
+  background: rgba(38, 132, 124, 0.42);
+}
+
+.secondary-action:hover:not(:disabled) {
+  background: rgba(60, 154, 145, 0.52);
+}
+
+.refuse-action {
+  color: #f8f3ee;
+  background: rgba(132, 45, 59, 0.68);
+}
+
+.refuse-action:hover:not(:disabled) {
+  background: rgba(162, 61, 78, 0.78);
+}
+
+.quiet-action {
+  color: #f8f3ee;
+  background: rgba(248, 243, 238, 0.06);
+}
+
+.quiet-action:hover:not(:disabled) {
+  background: rgba(248, 243, 238, 0.11);
+}
+
+.error-banner,
+.inline-error {
+  border: 1px solid rgba(232, 108, 100, 0.38);
+  border-radius: 8px;
+  color: #ffd0cb;
+  background: rgba(122, 31, 42, 0.48);
+}
+
+.error-banner {
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+}
+
+.inline-error {
+  padding: 0.75rem 0.85rem;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.chip {
+  border: 1px solid rgba(155, 212, 199, 0.34);
+  border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+  color: #c2eee3;
+  background: rgba(34, 111, 106, 0.26);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.chip--quiet {
+  border-color: rgba(248, 243, 238, 0.16);
+  color: rgba(248, 243, 238, 0.62);
+  background: rgba(248, 243, 238, 0.05);
+}
+
+@media (max-width: 680px) {
+  .app-shell {
+    padding: 0.85rem;
+  }
+
+  .flow-panel,
+  .current-card-panel,
+  .privacy-panel,
+  .score-panel,
+  .session-code-panel,
+  .result-hero,
+  .status-strip {
+    max-width: calc(100vw - 1.7rem);
+  }
+}

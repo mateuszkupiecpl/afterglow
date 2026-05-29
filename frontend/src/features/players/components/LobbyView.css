@@ -1,0 +1,67 @@
+.lobby-screen {
+  gap: 1rem;
+}
+
+.session-code-panel {
+  display: grid;
+  gap: 0.5rem;
+  min-height: 8rem;
+  align-content: center;
+}
+
+.session-code-panel h2 {
+  color: #f0c36a;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: clamp(2.4rem, 12vw, 5.5rem);
+  letter-spacing: 0;
+}
+
+.session-code-panel p:last-child {
+  color: rgba(248, 243, 238, 0.68);
+  font-weight: 800;
+}
+
+.lobby-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.player-list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.player-row {
+  display: grid;
+  gap: 0.7rem;
+  border-top: 1px solid rgba(248, 243, 238, 0.1);
+  padding-top: 0.75rem;
+}
+
+.player-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.player-row strong,
+.player-row span {
+  display: block;
+}
+
+.player-row > div:first-child span {
+  margin-top: 0.22rem;
+  color: rgba(248, 243, 238, 0.54);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+@media (max-width: 920px) {
+  .lobby-layout {
+    grid-template-columns: 1fr;
+  }
+}

@@ -5,6 +5,7 @@ import type { GameSession } from '../../game-session/model/gameSession'
 import { canStartSession } from '../../game-flow/model/gameplaySelectors'
 import type { AddPlayerForm } from '../model/addPlayerForm'
 import * as React from "react";
+import './LobbyView.css'
 
 type LobbyViewProps = {
   session: GameSession

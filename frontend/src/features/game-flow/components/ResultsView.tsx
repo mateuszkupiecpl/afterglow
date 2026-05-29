@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import type { GameSession } from '../../game-session/model/gameSession'
 import { scoreRows } from '../model/gameplaySelectors'
+import './ResultsView.css'
 
 type ResultsViewProps = {
   session: GameSession

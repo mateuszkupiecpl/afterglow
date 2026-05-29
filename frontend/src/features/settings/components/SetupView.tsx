@@ -5,6 +5,7 @@ import { modeOptions, paceOptions, spiceOptions } from '../../game-session/model
 import { BoundaryPicker } from './BoundaryPicker'
 import type { CreateSessionForm } from '../model/createSessionForm'
 import * as React from "react";
+import './SetupView.css'
 
 type SetupViewProps = {
   busy: boolean
