@@ -1,14 +1,11 @@
 import { useTranslation } from 'react-i18next'
 import type { GameSession } from '../model/gameSession'
-import type { DataSource } from '../hooks/useGameSessionController'
 
 type SessionHeaderProps = {
-  source: DataSource
-  onSourceChange: (source: DataSource) => void
   session: GameSession | null
 }
 
-export function SessionHeader({ source, onSourceChange, session }: SessionHeaderProps) {
+export function SessionHeader({ session }: SessionHeaderProps) {
   const { i18n, t: translate } = useTranslation()
 
   function changeLanguage(language: 'en' | 'pl') {
@@ -45,27 +42,6 @@ export function SessionHeader({ source, onSourceChange, session }: SessionHeader
             onClick={() => changeLanguage('pl')}
           >
             {translate('common.polish')}
-          </button>
-        </div>
-
-        <div className="source-switch" role="radiogroup" aria-label={translate('header.dataSource')}>
-          <button
-            aria-checked={source === 'mock'}
-            className={source === 'mock' ? 'source-switch__option is-active' : 'source-switch__option'}
-            role="radio"
-            type="button"
-            onClick={() => onSourceChange('mock')}
-          >
-            {translate('common.local')}
-          </button>
-          <button
-            aria-checked={source === 'api'}
-            className={source === 'api' ? 'source-switch__option is-active' : 'source-switch__option'}
-            role="radio"
-            type="button"
-            onClick={() => onSourceChange('api')}
-          >
-            {translate('common.api')}
           </button>
         </div>
       </div>

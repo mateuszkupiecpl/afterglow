@@ -1,8 +1,6 @@
 export const gameSessionMessagesPl = {
   common: {
-    api: 'API',
     english: 'Angielski',
-    local: 'Lokalnie',
     player: 'Gracz',
     polish: 'Polski',
     points: '{{count}} pkt',
@@ -39,7 +37,6 @@ export const gameSessionMessagesPl = {
   },
   header: {
     brand: 'Afterglow',
-    dataSource: 'Źródło danych',
     language: 'Język',
     oneDeviceSession: 'Sesja na jednym urządzeniu',
     results: 'Wyniki',
@@ -55,7 +52,6 @@ export const gameSessionMessagesPl = {
     everyPlayerAdultConfirmed: 'Każdy gracz musi potwierdzić, że ma 18+ lat przed dołączeniem.',
     maxPlayersReached: 'Ta sesja ma już maksymalną liczbę graczy.',
     noCurrentCardToResolve: 'Nie ma aktualnej karty do rozstrzygnięcia.',
-    noLocalSessionForCode: 'Żadna lokalna sesja nie używa tego kodu.',
     onlyCardOwnerCanResolve: 'Tylko gracz, który zagrał kartę, może ją rozstrzygnąć.',
     onlyCurrentTurnPlayerCanPlay: 'Tylko gracz aktualnej tury może zagrać kartę.',
     playerNotInSession: 'Wybrany gracz nie jest w tej sesji.',

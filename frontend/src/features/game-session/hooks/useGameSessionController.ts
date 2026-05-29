@@ -1,20 +1,14 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { DiceRollResource, GameSessionResource } from '../api/gameSessionResources'
-import { backendGameSessionApi, type GameSessionApi } from '../api/gameSessionApi'
-import { createLocalGameSessionApi } from '../api/localGameSessionApi'
+import { gameSessionApi } from '../api/gameSessionApi'
 import { mapGameSessionResource } from '../model/resourceMapper'
 import { currentPlayer } from '../../game-flow/model/gameplaySelectors'
 import type { CreateSessionForm } from '../../settings/model/createSessionForm'
 import type { AddPlayerForm } from '../../players/model/addPlayerForm'
 
-export type DataSource = 'mock' | 'api'
-
-const localGameSessionApi = createLocalGameSessionApi()
-
 export function useGameSessionController() {
   const { t: translate } = useTranslation()
-  const [source, setSource] = useState<DataSource>('mock')
   const [sessionResource, setSessionResource] = useState<GameSessionResource | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -22,15 +16,6 @@ export function useGameSessionController() {
   const [lastRoll, setLastRoll] = useState<DiceRollResource | null>(null)
 
   const session = useMemo(() => (sessionResource ? mapGameSessionResource(sessionResource) : null), [sessionResource])
-  const gameSessionApi: GameSessionApi = source === 'api' ? backendGameSessionApi : localGameSessionApi
-
-  function changeSource(nextSource: DataSource) {
-    setSource(nextSource)
-    setSessionResource(null)
-    setError(null)
-    setHandRevealed(false)
-    setLastRoll(null)
-  }
 
   async function runSessionAction(action: () => Promise<GameSessionResource>, revealNextHand = false) {
     setBusy(true)
@@ -172,13 +157,11 @@ export function useGameSessionController() {
   }
 
   return {
-    source,
     session,
     busy,
     error,
     handRevealed,
     lastRoll,
-    changeSource,
     createSession,
     addPlayer,
     startSession,

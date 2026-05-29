@@ -1,8 +1,6 @@
 export const gameSessionMessages = {
   common: {
-    api: 'API',
     english: 'English',
-    local: 'Local',
     player: 'Player',
     polish: 'Polish',
     points: '{{count}} points',
@@ -39,7 +37,6 @@ export const gameSessionMessages = {
   },
   header: {
     brand: 'Afterglow',
-    dataSource: 'Data source',
     language: 'Language',
     oneDeviceSession: 'One-device session',
     results: 'Results',
@@ -55,7 +52,6 @@ export const gameSessionMessages = {
     everyPlayerAdultConfirmed: 'Every player must confirm they are 18+ before joining.',
     maxPlayersReached: 'This session already has the maximum number of players.',
     noCurrentCardToResolve: 'There is no current card to resolve.',
-    noLocalSessionForCode: 'No local session uses that code.',
     onlyCardOwnerCanResolve: 'Only the player who played the card can resolve it.',
     onlyCurrentTurnPlayerCanPlay: 'Only the current turn player can play a card.',
     playerNotInSession: 'The selected player is not in this session.',

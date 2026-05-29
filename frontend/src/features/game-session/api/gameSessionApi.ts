@@ -26,7 +26,7 @@ export type GameSessionApi = {
 
 let homeResource: Promise<HomeResource> | null = null
 
-export const backendGameSessionApi: GameSessionApi = {
+export const gameSessionApi: GameSessionApi = {
   async createSession(request) {
     const home = await loadHome()
     const href = requireLinkHref(home, 'createGameSession')

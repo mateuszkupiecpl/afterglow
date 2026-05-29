@@ -11,7 +11,7 @@ export function SessionPage() {
 
   return (
     <main className="app-shell">
-      <SessionHeader source={gameSession.source} session={session} onSourceChange={gameSession.changeSource} />
+      <SessionHeader session={session} />
 
       {gameSession.error ? (
         <div className="error-banner" role="status">
