@@ -1,5 +1,5 @@
-import type { GameSession } from '../../domain/gameSession'
-import { scoreRows } from '../../domain/gameplaySelectors'
+import type { GameSession } from '../../game-session/model/gameSession'
+import { scoreRows } from '../model/gameplaySelectors'
 
 type ResultsViewProps = {
   session: GameSession

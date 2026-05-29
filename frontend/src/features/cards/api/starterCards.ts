@@ -1,4 +1,4 @@
-import type { CardResource } from '../api/gameSessionResources'
+import type { CardResource } from '../../game-session/api/gameSessionResources'
 
 export const starterCards: CardResource[] = [
   {

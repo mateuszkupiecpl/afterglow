@@ -6,15 +6,15 @@ import {
   targetLabels,
   type CardInstance,
   type GameSession,
-} from '../../domain/gameSession'
+} from '../../game-session/model/gameSession'
 import {
   cardNeedsTarget,
   currentPlayer,
   eligibleTargetsForCard,
   playerById,
   scoreRows,
-} from '../../domain/gameplaySelectors'
-import type { DiceRollResource } from '../../api/gameSessionResources'
+} from '../model/gameplaySelectors'
+import type { DiceRollResource } from '../../game-session/api/gameSessionResources'
 
 type GameplayViewProps = {
   session: GameSession

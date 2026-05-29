@@ -1,4 +1,4 @@
-import type { HalResource } from './hal'
+import type { HalResource } from '../../../api/halClient'
 
 export const gameStatuses = ['setup', 'in_progress', 'paused', 'finished'] as const
 export type GameStatus = (typeof gameStatuses)[number]

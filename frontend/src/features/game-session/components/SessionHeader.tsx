@@ -1,6 +1,5 @@
-import type { GameSession } from '../domain/gameSession'
-
-type DataSource = 'mock' | 'api'
+import type { GameSession } from '../model/gameSession'
+import type { DataSource } from '../hooks/useGameSessionController'
 
 type SessionHeaderProps = {
   source: DataSource

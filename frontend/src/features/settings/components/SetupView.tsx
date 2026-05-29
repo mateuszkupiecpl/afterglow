@@ -1,20 +1,8 @@
 import { useState } from 'react'
-import type { BoundaryCode, GameMode, PaceCode, SpiceLevel } from '../../domain/gameSession'
-import { modeOptions, paceOptions, spiceOptions } from '../../domain/gameSession'
-import { BoundaryPicker } from '../../components/BoundaryPicker'
-
-export type CreateSessionForm = {
-  hostNickname: string
-  confirmedAdult: boolean
-  mode: GameMode
-  startSpiceLevel: SpiceLevel
-  maxSpiceLevel: SpiceLevel
-  pace: PaceCode
-  allowProps: boolean
-  allowPairTasks: boolean
-  allowGroupTasks: boolean
-  boundaries: BoundaryCode[]
-}
+import type { GameMode, PaceCode, SpiceLevel } from '../../game-session/model/gameSession'
+import { modeOptions, paceOptions, spiceOptions } from '../../game-session/model/gameSession'
+import { BoundaryPicker } from './BoundaryPicker'
+import type { CreateSessionForm } from '../model/createSessionForm'
 
 type SetupViewProps = {
   busy: boolean

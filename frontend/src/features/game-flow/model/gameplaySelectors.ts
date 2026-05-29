@@ -1,4 +1,4 @@
-import type { BoundaryCode, Card, GameSession, Player } from './gameSession'
+import type { BoundaryCode, Card, GameSession, Player } from '../../game-session/model/gameSession'
 
 const targetRequiresSpecificPlayer = new Set(['chosen_player'])
 

@@ -1,20 +1,17 @@
 import { useMemo, useState } from 'react'
-import type { DiceRollResource, GameSessionResource } from './api/gameSessionResources'
-import { backendGameSessionApi, type GameSessionApi } from './api/gameSessionApi'
-import { SessionHeader } from './components/SessionHeader'
-import { GameplayView } from './features/gameplay/GameplayView'
-import { LobbyView, type AddPlayerForm } from './features/lobby/LobbyView'
-import { ResultsView } from './features/results/ResultsView'
-import { SetupView, type CreateSessionForm } from './features/setup/SetupView'
-import { mapGameSessionResource } from './domain/resourceMapper'
-import { currentPlayer } from './domain/gameplaySelectors'
-import { createMockGameSessionApi } from './mocks/mockGameSessionApi'
+import type { DiceRollResource, GameSessionResource } from '../api/gameSessionResources'
+import { backendGameSessionApi, type GameSessionApi } from '../api/gameSessionApi'
+import { createLocalGameSessionApi } from '../api/localGameSessionApi'
+import { mapGameSessionResource } from '../model/resourceMapper'
+import { currentPlayer } from '../../game-flow/model/gameplaySelectors'
+import type { CreateSessionForm } from '../../settings/model/createSessionForm'
+import type { AddPlayerForm } from '../../players/model/addPlayerForm'
 
-type DataSource = 'mock' | 'api'
+export type DataSource = 'mock' | 'api'
 
-const mockGameSessionApi = createMockGameSessionApi()
+const localGameSessionApi = createLocalGameSessionApi()
 
-function App() {
+export function useGameSessionController() {
   const [source, setSource] = useState<DataSource>('mock')
   const [sessionResource, setSessionResource] = useState<GameSessionResource | null>(null)
   const [busy, setBusy] = useState(false)
@@ -23,7 +20,7 @@ function App() {
   const [lastRoll, setLastRoll] = useState<DiceRollResource | null>(null)
 
   const session = useMemo(() => (sessionResource ? mapGameSessionResource(sessionResource) : null), [sessionResource])
-  const gameSessionApi: GameSessionApi = source === 'api' ? backendGameSessionApi : mockGameSessionApi
+  const gameSessionApi: GameSessionApi = source === 'api' ? backendGameSessionApi : localGameSessionApi
 
   function changeSource(nextSource: DataSource) {
     setSource(nextSource)
@@ -172,40 +169,23 @@ function App() {
     setLastRoll(null)
   }
 
-  return (
-    <main className="app-shell">
-      <SessionHeader source={source} session={session} onSourceChange={changeSource} />
-
-      {error ? (
-        <div className="error-banner" role="status">
-          {error}
-        </div>
-      ) : null}
-
-      {!session ? <SetupView busy={busy} onCreateSession={createSession} /> : null}
-
-      {session?.status === 'setup' ? (
-        <LobbyView session={session} busy={busy} onAddPlayer={addPlayer} onStart={startSession} />
-      ) : null}
-
-      {session?.status === 'in_progress' ? (
-        <GameplayView
-          busy={busy}
-          handRevealed={handRevealed}
-          lastRoll={lastRoll}
-          session={session}
-          onCompleteCurrentCard={completeCurrentCard}
-          onFinish={finishSession}
-          onPlayCard={playCard}
-          onRefuseCurrentCard={refuseCurrentCard}
-          onRevealHand={() => setHandRevealed(true)}
-          onRollDie={rollDie}
-        />
-      ) : null}
-
-      {session?.status === 'finished' ? <ResultsView session={session} onNewSession={resetSession} /> : null}
-    </main>
-  )
+  return {
+    source,
+    session,
+    busy,
+    error,
+    handRevealed,
+    lastRoll,
+    changeSource,
+    createSession,
+    addPlayer,
+    startSession,
+    playCard,
+    completeCurrentCard,
+    refuseCurrentCard,
+    rollDie,
+    finishSession,
+    revealHand: () => setHandRevealed(true),
+    resetSession,
+  }
 }
-
-export default App

@@ -1,4 +1,4 @@
-import type { GameSessionApi } from '../api/gameSessionApi'
+import type { GameSessionApi } from './gameSessionApi'
 import type {
   AddPlayerRequest,
   BoundaryCode,
@@ -13,9 +13,9 @@ import type {
   PlayerResource,
   ResolveCurrentCardRequest,
   SpiceLevel,
-} from '../api/gameSessionResources'
-import { spiceLevels } from '../api/gameSessionResources'
-import { starterCards } from './starterCards'
+} from './gameSessionResources'
+import { spiceLevels } from './gameSessionResources'
+import { starterCards } from '../../cards/api/starterCards'
 
 const apiRoot = '/api'
 const minPlayers = 2
@@ -25,7 +25,7 @@ type MutableSession = GameSessionResource & {
   drawCursor: number
 }
 
-export function createMockGameSessionApi(): GameSessionApi {
+export function createLocalGameSessionApi(): GameSessionApi {
   const sessions = new Map<string, MutableSession>()
   let sessionSequence = 100
   let playerSequence = 1

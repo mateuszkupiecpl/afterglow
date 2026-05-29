@@ -1,5 +1,6 @@
-import axios from 'axios'
-import { requireLinkHref, requestUrlFromHref } from './hal'
+import { apiBaseUrl, axiosClient } from '../../../api/axiosClient'
+import { normalizeApiError } from '../../../api/apiError'
+import { requireLinkHref, requestUrlFromHref } from '../../../api/halClient'
 import type {
   AddPlayerRequest,
   CreateGameSessionRequest,
@@ -22,19 +23,6 @@ export type GameSessionApi = {
   rollDie(session: GameSessionResource, request?: DiceRollRequest): Promise<DiceRollResource>
   finish(session: GameSessionResource): Promise<GameSessionResource>
 }
-
-type ApiErrorBody = {
-  error?: string
-  message?: string
-}
-
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? '/api'
-
-const api = axios.create({
-  headers: {
-    Accept: 'application/hal+json, application/json',
-  },
-})
 
 let homeResource: Promise<HomeResource> | null = null
 
@@ -81,17 +69,20 @@ export const backendGameSessionApi: GameSessionApi = {
 }
 
 async function loadHome(): Promise<HomeResource> {
-  homeResource ??= api.get<HomeResource>(apiBaseUrl).then((response) => response.data).catch((error: unknown) => {
-    homeResource = null
-    throw normalizeApiError(error)
-  })
+  homeResource ??= axiosClient
+    .get<HomeResource>(apiBaseUrl)
+    .then((response) => response.data)
+    .catch((error: unknown) => {
+      homeResource = null
+      throw normalizeApiError(error)
+    })
 
   return homeResource
 }
 
 async function getSession(href: string): Promise<GameSessionResource> {
   try {
-    const response = await api.get<GameSessionResource>(requestUrlFromHref(href))
+    const response = await axiosClient.get<GameSessionResource>(requestUrlFromHref(href))
     return response.data
   } catch (error: unknown) {
     throw normalizeApiError(error)
@@ -104,19 +95,9 @@ async function postSession(href: string, body?: unknown): Promise<GameSessionRes
 
 async function postResource<T>(href: string, body?: unknown): Promise<T> {
   try {
-    const response = await api.post<T>(requestUrlFromHref(href), body)
+    const response = await axiosClient.post<T>(requestUrlFromHref(href), body)
     return response.data
   } catch (error: unknown) {
     throw normalizeApiError(error)
   }
-}
-
-function normalizeApiError(error: unknown): Error {
-  if (axios.isAxiosError<ApiErrorBody>(error)) {
-    const body = error.response?.data
-    const message = body?.message ?? body?.error ?? error.message
-    return new Error(message)
-  }
-
-  return error instanceof Error ? error : new Error('The API request failed.')
 }

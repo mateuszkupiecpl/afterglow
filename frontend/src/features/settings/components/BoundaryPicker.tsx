@@ -1,4 +1,4 @@
-import { boundaryOptions, type BoundaryCode } from '../domain/gameSession'
+import { boundaryOptions, type BoundaryCode } from '../../game-session/model/gameSession'
 
 type BoundaryPickerProps = {
   selected: BoundaryCode[]

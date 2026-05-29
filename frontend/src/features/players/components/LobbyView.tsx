@@ -1,13 +1,8 @@
 import { useState } from 'react'
-import { BoundaryPicker } from '../../components/BoundaryPicker'
-import { boundaryOptions, type BoundaryCode, type GameSession } from '../../domain/gameSession'
-import { canStartSession } from '../../domain/gameplaySelectors'
-
-export type AddPlayerForm = {
-  nickname: string
-  confirmedAdult: boolean
-  boundaries: BoundaryCode[]
-}
+import { BoundaryPicker } from '../../settings/components/BoundaryPicker'
+import { boundaryOptions, type GameSession } from '../../game-session/model/gameSession'
+import { canStartSession } from '../../game-flow/model/gameplaySelectors'
+import type { AddPlayerForm } from '../model/addPlayerForm'
 
 type LobbyViewProps = {
   session: GameSession
