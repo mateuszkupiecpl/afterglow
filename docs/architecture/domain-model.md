@@ -1,36 +1,21 @@
-# Domain Model Draft
+# Domain Model
 
-This document describes the working domain model. It is not the final API
-contract.
-
-## Modelling Rules
-
-- Prefer DDD, domain-first thinking, and explicit modelling.
-- Do not avoid creating additional classes when they improve clarity.
-- Prefer explicit modelling over generic structures.
-- Prefer a rich domain model over an anemic model when behavior or invariants
-  belong with the concept.
-- Naming should communicate business meaning.
-- Avoid god classes, generic utility containers, and giant service classes.
-- Do not collapse the game into CRUD when rules, consent, boundaries, targeting,
-  card eligibility, or progression deserve their own model.
+This is a working domain model draft. It is not the final API contract.
 
 ## Domain And API Boundary
 
 Domain Model != API Resource.
 
-API-facing classes must be separate resources with the `Resource` suffix, for
+API-facing models must be separate resources with the `Resource` suffix, for
 example `PlayerResource`, `GameSessionResource`, and `CardResource`.
 
 Do not use the `DTO` suffix for API-facing models.
 
-## Main Entities
+## Main Concepts
 
 ### GameSession
 
 Represents one game session.
-
-Working shape:
 
 ```ts
 type GameSession = {
@@ -108,7 +93,7 @@ type Card = {
 
 ### CardInstance
 
-A separate card instance may be needed for cards in player hands.
+A card instance may be needed for cards in player hands.
 
 ```ts
 type CardInstance = {
@@ -231,7 +216,7 @@ type DiceRollRange = {
 
 ## Implementation Note
 
-The first model may be smaller than this draft. Simplicity is acceptable when it
-keeps the local game loop moving, but simplification should not erase important
-domain boundaries. The project should remain suitable for DDD practice and later
-mapping to Java domain concepts.
+The first model may be smaller than this draft. Simplification is acceptable
+when it keeps the local game loop moving, but it should not erase important
+domain boundaries around consent, targeting, card eligibility, progression, or
+session state.

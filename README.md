@@ -13,8 +13,9 @@ like a simple random task generator.
 ## Current Status
 
 - Project phase: documentation and structure.
+- Repository shape: one monorepo with `frontend/` and `backend/` packages.
 - Application code: frontend scaffold exists; backend scaffold is not created yet.
-- Platform direction: Web/PWA proposed for the first version.
+- Platform direction: Web/PWA accepted for the first version.
 - MVP direction: local one-device gameplay first, backend/multiplayer later.
 - Product name: Afterglow, currently proposed.
 - Secondary project goal: practice domain-driven design, explicit modelling,
@@ -39,14 +40,21 @@ like a simple random task generator.
 
 - `docs/product/vision.md` - product vision and principles.
 - `docs/product/mvp-scope.md` - MVP scope and exclusions.
+- `docs/product/game-design.md` - working mechanics and gameplay direction.
+- `docs/product/consent-boundaries.md` - consent, refusal, and card filtering
+  rules.
 - `docs/product/open-decisions.md` - unresolved decisions.
+- `docs/README.md` - canonical docs reading order and priority rules.
+- `docs/architecture/architecture.md` - canonical architecture rules.
 - `docs/architecture/tech-stack.md` - planned technical stack.
+- `docs/architecture/domain-model.md` - working domain model draft.
+- `docs/architecture/backend-guidelines.md` - backend modelling and API
+  guidance.
+- `docs/architecture/frontend-guidelines.md` - frontend stack and tooling
+  guidance.
+- `docs/architecture/testing.md` - backend testing strategy.
+- `docs/decisions/decision-log.md` - accepted product and architecture
+  decisions.
 - `docs/decisions/ADR-001-platform.md` - platform decision record.
-- `docs/source/` - source-of-truth notes for product, architecture, testing,
-  and implementation guidance.
-- `docs/source/architecture.md` - canonical architecture rules.
-- `docs/source/backend-guidelines.md` - backend modelling and API guidance.
-- `docs/source/frontend-guidelines.md` - frontend stack and tooling guidance.
-- `docs/source/testing.md` - backend testing strategy.
 - `frontend/` - React, TypeScript, and Vite frontend scaffold.
 - `backend/` - backend placeholder, no app scaffold yet.

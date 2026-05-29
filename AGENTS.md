@@ -10,11 +10,12 @@ new application structure unless the user explicitly asks for implementation.
 
 ## Source Priority
 
-- Use `docs/source/` as the source of truth for product and architecture notes.
-- Newer dated source documents take priority over older notes.
-- `docs/source/2026-05-22-decision-log.md` has priority for accepted decisions.
-- `docs/source/decision-log.md`, if present, is a convenience pointer; keep the
-  dated decision log authoritative unless it is explicitly replaced.
+- Use `docs/` as the source of truth for product, architecture, decision, and
+  implementation notes.
+- Start with `docs/README.md` for the current reading order.
+- `docs/decisions/decision-log.md` has priority for accepted decisions.
+- Newer dated accepted decisions take priority over older notes on the same
+  topic.
 - MVP scope takes priority over later-stage ideas.
 - Mark unresolved or unsupported details as `TBD`.
 

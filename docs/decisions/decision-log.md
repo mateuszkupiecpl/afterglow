@@ -1,7 +1,7 @@
 # Decision Log
 
 Update this file whenever an important product or architecture decision becomes
-accepted. This file is currently authoritative for accepted decisions.
+accepted. Accepted decisions here are canonical.
 
 ## 2026-05-22
 
@@ -11,10 +11,10 @@ Status: accepted
 
 Rationale:
 
-- 18+ content may face App Store constraints.
+- Adult content may face App Store constraints.
 - PWA works on iPhone, Android, and desktop.
 - Decks and content can be updated more easily.
-- The stack fits the author's React, TypeScript, and Java direction.
+- The stack fits the React, TypeScript, and Java direction.
 
 ### Decision: Working Frontend Stack
 
@@ -56,7 +56,7 @@ Status: accepted
 
 Rationale:
 
-- Apple restrictions for sexual content.
+- App Store restrictions for sexual content.
 - More freedom through web/PWA distribution.
 
 ### Decision: Players Have Several Cards In Hand
@@ -86,13 +86,11 @@ Status: proposed / strong recommendation
 - Atmosphere track.
 - Group voting.
 
-### Decision: Working Name
+### Decision: Working Product Name
 
 Status: proposed
 
 - Product name: `Afterglow`.
-- Frontend repo: `afterglow-ui`.
-- Backend repo: `afterglow`.
 
 ### Decision: Public UGC Outside MVP
 
@@ -140,8 +138,9 @@ Rules:
 - The application layer orchestrates use cases.
 - The domain owns business rules.
 - Java backend code uses `var` for local variables when the type can be inferred
-  clearly. Fields, constants, method parameters, return types, record
-  components, and public API signatures keep explicit types.
+  clearly.
+- Fields, constants, method parameters, return types, record components, and
+  public API signatures keep explicit types.
 
 ### Decision: API Uses Resources, Not DTOs
 
@@ -154,8 +153,8 @@ Do not use the `DTO` suffix for API-facing models.
 
 Domain Model != API Resource.
 
-Use a HATEOAS-inspired API approach. Backend responses use Spring HATEOAS
-links, and `/api` is the API home resource for frontend entry links.
+Use a HATEOAS-inspired API approach. Backend responses use Spring HATEOAS links,
+and `/api` is the API home resource for frontend entry links.
 
 API resources that expose links use `RepresentationModel`; they are not wrapped
 in `EntityModel`.
@@ -225,12 +224,25 @@ Rules:
 - Application services return application snapshots/read models instead of
   exposing domain aggregates to controllers.
 - Domain ports are public boundary interfaces for application and
-  infrastructure. They may expose domain model types without making those types
-  API contracts.
+  infrastructure.
+- Domain ports may expose domain model types without making those types API
+  contracts.
 - Infrastructure adapter implementations should be package-private and wired
   through public port interfaces.
-- Adapter classes stay in infrastructure; do not move them into domain only to
-  reduce Java visibility.
+- Adapter classes stay in infrastructure.
 - Java production classes, constructors, and methods must not be made public
-  only for tests. Groovy/Spock tests may exercise non-public Java types and
-  members, so production visibility is based on production dependencies only.
+  only for tests.
+
+## 2026-05-29
+
+### Decision: Monorepo Repository Structure
+
+Status: accepted
+
+Afterglow uses one monorepo with separate package directories:
+
+- `frontend/` for the React, TypeScript, Vite, and PWA frontend.
+- `backend/` for the Java and Spring Boot backend when backend implementation
+  is active.
+
+Use the monorepo package layout in current project docs.

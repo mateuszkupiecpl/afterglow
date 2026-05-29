@@ -39,5 +39,6 @@ local one-device MVP.
 - Prioritize the local one-device loop.
 - Do not introduce backend dependencies unless explicitly requested.
 - Do not implement public UGC, matchmaking, chat, payments, or native iOS.
+- Do not introduce AI features unless explicitly requested.
 - Card content must include metadata for type, spice level, target, and
   boundaries.

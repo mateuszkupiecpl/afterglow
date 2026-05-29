@@ -16,11 +16,11 @@ This document tracks unresolved decisions from the current source material.
 
 ## Technology
 
-- Repository structure: separate frontend/backend repositories or monorepo.
 - First frontend version: fully local without backend or with mock API.
 - React state management: Zustand, Redux Toolkit, TanStack Store, React Context,
   or another option.
 - MVP card data format: JSON, TypeScript fixtures, or mocked backend.
+- Exact PWA asset/versioning contract.
 
 ## Content
 
@@ -41,3 +41,9 @@ This document tracks unresolved decisions from the current source material.
 - Paid decks: TBD.
 - User-created decks: TBD.
 - If user decks exist, whether they are private only or public.
+
+## Implementation Timing
+
+- Backend start date: TBD.
+- Multiplayer start date: TBD.
+- First playable prototype scope cut: TBD.

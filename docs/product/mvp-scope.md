@@ -51,6 +51,7 @@ instead of merely slowing it down.
 - Chat.
 - Payments.
 - Native iOS app.
+- AI features.
 - Bluetooth multiplayer.
 - Full card editor.
 - Advanced animations.

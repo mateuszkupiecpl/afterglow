@@ -16,7 +16,8 @@ begins, follow these rules.
 
 - `domain/` owns entities, value objects, domain services, repository ports,
   domain policies, and business rules.
-- `application/` owns use cases, orchestration, commands, and queries.
+- `application/` owns use cases, orchestration, commands, queries, snapshots,
+  read models, and application exceptions.
 - `infrastructure/` owns persistence, external integrations, Spring
   configuration, and implementations of ports.
 - `api/` owns request/response resources and mapping to the application layer.
@@ -28,26 +29,20 @@ begins, follow these rules.
   or cross-layer dependencies are introduced.
 - `api/` may depend on public application use cases, commands, queries,
   application snapshots/read models, and application exceptions.
-- `api/` must not import `domain/` or `domain/port/` types. Domain objects are
-  not request or response contracts.
-- `application/` may depend on the domain model and domain ports. It translates
-  incoming codes and commands into domain values, orchestrates use cases, and
-  returns application snapshots/read models instead of domain aggregates.
+- `api/` must not import `domain/` or `domain/port/` types.
+- `application/` may depend on the domain model and domain ports.
+- Application services translate incoming commands into domain values and return
+  application snapshots/read models instead of exposing aggregates.
 - `domain/port/` interfaces are public because application services and
-  infrastructure adapters must compile against them. They may expose domain
-  model types; that does not make those types API contracts.
-- `infrastructure/` implements ports and owns Spring configuration. Adapter
-  implementations should be package-private and wired through public port
-  interfaces.
-- Do not move adapter classes into `domain/` only to hide them. If a class
-  talks to persistence, content storage, Spring, or external systems, it belongs
-  in `infrastructure/`.
+  infrastructure adapters must compile against them.
+- Infrastructure adapter implementations should be package-private and wired
+  through public port interfaces.
+- If a class talks to persistence, content storage, Spring, or external systems,
+  it belongs in `infrastructure/`.
 - Domain helper classes should be package-private when they are not needed by
   application services, ports, or adapters.
 - Do not make Java production classes, constructors, or methods public only so
-  Groovy/Spock tests can access them. Spock tests may exercise non-public Java
-  types and members; production visibility should be driven by production
-  dependency boundaries only.
+  tests can access them.
 
 ## Domain Rules
 
@@ -56,8 +51,8 @@ begins, follow these rules.
 - Consent, boundaries, spice limits, targeting rules, and card eligibility are
   domain rules.
 - Use domain value object wrappers for concepts with validation, ranges, or
-  behavior instead of raw primitives. Do not add a `ValueObject` suffix; name
-  wrappers after the domain concept.
+  behavior instead of raw primitives.
+- Do not add a `ValueObject` suffix.
 - Repository interfaces belong on the domain/application side as ports.
 - Persistence classes and Spring repositories are adapter details.
 
@@ -65,8 +60,8 @@ begins, follow these rules.
 
 - Use a HATEOAS-inspired API style.
 - Use Spring HATEOAS for backend response links.
-- API resource classes that expose links should use `RepresentationModel`;
-  do not wrap API resources in `EntityModel`.
+- API resource classes that expose links should use `RepresentationModel`.
+- Do not wrap API resources in `EntityModel`.
 - Add links to API resources only through classes with the `LinkAssembler`
   suffix, for example `GameSessionLinkAssembler`.
 - Expose `/api` as the API home resource for frontend entry links.
@@ -82,9 +77,9 @@ begins, follow these rules.
 ## Implementation Guidance
 
 - Prefer explicit classes and names over generic maps or stringly typed flows.
-- In Java backend code, use `var` for local variables when Java can infer the
-  type clearly. Keep explicit types for fields, constants, method parameters,
-  return types, record components, and public API signatures.
+- Use `var` for Java local variables when Java can infer the type clearly.
+- Keep explicit types for fields, constants, method parameters, return types,
+  record components, and public API signatures.
 - Do not introduce microservices for the early project.
 - Keep controllers thin.
 - Keep orchestration in application use cases.
